@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.VideoDetails;
 
 /**
  * Created by iFocus on 11-06-2018.

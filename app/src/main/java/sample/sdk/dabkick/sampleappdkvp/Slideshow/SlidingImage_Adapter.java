@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.Slideshow;
 
 import android.content.Context;
 import android.os.Parcelable;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import java.util.ArrayList;
+
+import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.Slideshow.ImageModel;
 
 /**
  * Created by iFocus on 11-06-2018.

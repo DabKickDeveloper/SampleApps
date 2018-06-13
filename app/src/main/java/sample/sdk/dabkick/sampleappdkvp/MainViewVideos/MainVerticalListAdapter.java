@@ -1,6 +1,5 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.MainViewVideos;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -8,12 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
+import sample.sdk.dabkick.sampleappdkvp.CategoryViewForVideos.VideosOfCategory;
+import sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity;
+import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.Util.Util;
+import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 
 /**
  * Created by iFocus on 11-06-2018.
@@ -23,7 +26,7 @@ public class MainVerticalListAdapter extends BaseAdapter {
 
     Context mActivity;
 
-    MainVerticalListAdapter(Context mActivity){
+    public MainVerticalListAdapter(Context mActivity){
 
         this.mActivity = mActivity;
     }

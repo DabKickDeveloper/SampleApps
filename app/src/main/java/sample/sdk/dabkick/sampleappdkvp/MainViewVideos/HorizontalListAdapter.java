@@ -1,10 +1,6 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.MainViewVideos;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +10,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
+
+import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 
 /**
  * Created by iFocus on 11-06-2018.

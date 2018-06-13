@@ -1,9 +1,11 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.Util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 
 /**
  * Created by iFocus on 11-06-2018.

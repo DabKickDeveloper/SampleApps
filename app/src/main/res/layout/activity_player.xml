@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sample.sdk.dabkick.sampleappdkvp.PlayerActivity">
+    tools:context="sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity">
 
     <com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView
         android:layout_width="match_parent"

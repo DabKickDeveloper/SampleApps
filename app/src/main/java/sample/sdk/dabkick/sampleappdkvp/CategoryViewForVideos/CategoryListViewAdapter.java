@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.CategoryViewForVideos;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +9,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity;
+import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 
 /**
  * Created by iFocus on 11-06-2018.

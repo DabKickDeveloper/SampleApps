@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import sample.sdk.dabkick.sampleappdkvp.MainViewVideos.MainVerticalListAdapter;
+import sample.sdk.dabkick.sampleappdkvp.Slideshow.ImageModel;
+import sample.sdk.dabkick.sampleappdkvp.Slideshow.SlidingImage_Adapter;
+
 public class MainActivity extends AppCompatActivity {
 
     private static ViewPager mPager;

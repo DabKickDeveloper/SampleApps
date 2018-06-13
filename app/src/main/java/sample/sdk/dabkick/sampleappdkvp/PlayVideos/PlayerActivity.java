@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.sampleappdkvp.PlayVideos;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,14 +8,15 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.livesession.models.StageModel;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
 
-import java.io.IOException;
-
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YtFile;
+import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 import timber.log.Timber;
 
 public class PlayerActivity extends AppCompatActivity {
@@ -51,42 +52,31 @@ public class PlayerActivity extends AppCompatActivity {
 
             String url = "https://www.youtube.com/watch?v=" + videoID + "&list=FLEYfH4kbq85W_CiOTuSjf8w&feature=mh_lolz";
 
-            new at.huber.youtubeExtractor.YouTubeExtractor(PlayerActivity.this) {
+            LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
                 @Override
-                protected void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta videoMeta) {
-                    if (ytFiles != null) {
-                        int itag = 22; //YouTube format identifier
-                        try {
-                            String downloadUrl;
-                            if (ytFiles.get(itag) == null) {
-                                downloadUrl = ytFiles.get(ytFiles.keyAt(0)).getUrl();
-                            } else {
-                                downloadUrl = ytFiles.get(itag).getUrl();
-                            }
-                            Log.d("new_video", "stream url: " + downloadUrl);
+                public void onFinishedDownload(String fullStreamURL, boolean success) {
+                    if(success){
 
-                            StageModel stageModel = new StageModel();
-                            stageModel.setUrl(downloadUrl);
+                        StageModel stageModel = new StageModel();
+                        stageModel.setUrl(fullStreamURL);
 
-                            mVideoPlayer.setMediaItem(stageModel);
-                            mVideoPlayer.prepare();
-                            mVideoPlayer.seekTo(0);
-                            mVideoPlayer.play();
-                            mVideoPlayer.setVisibility(View.VISIBLE);
+                        mVideoPlayer.setMediaItem(stageModel);
+                        mVideoPlayer.prepare();
+                        mVideoPlayer.seekTo(0);
+                        mVideoPlayer.play();
+                        mVideoPlayer.setVisibility(View.VISIBLE);
 
-                            mVideoPlayer.addPlayerEventListener(new EventListener());
-                            mVideoPlayer.addPlayerUIListener(new EventListener());
+                        mVideoPlayer.addPlayerEventListener(new PlayerActivity.EventListener());
+                        mVideoPlayer.addPlayerUIListener(new PlayerActivity.EventListener());
 
-                        } catch (Exception e) {
-                            Timber.e("exception loading youtube video");
-                            Timber.e(e);
-                        }
-                    } else {
+                    }else{
 
+                        Toast.makeText(PlayerActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }.extract(url, true, true);
+            });
 
+            LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, url);
         }
 
     }
