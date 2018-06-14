@@ -1,23 +1,20 @@
 package sample.sdk.dabkick.sampleappdkvp.PlayVideos;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.livesession.models.StageModel;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
 
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YtFile;
 import sample.sdk.dabkick.sampleappdkvp.R;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
-import timber.log.Timber;
+
+//import at.huber.youtubeExtractor.VideoMeta;
+//import at.huber.youtubeExtractor.YtFile;
 
 public class PlayerActivity extends AppCompatActivity {
 

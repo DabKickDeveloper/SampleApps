@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
@@ -30,7 +30,5 @@ dependencies {
     compile 'it.sephiroth.android.library.horizontallistview:hlistview:1.2.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-    implementation 'com.github.DabKickDeveloper:DKPlayer:95c7a1b319'
-    compile 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
-    //compile(name:'dkvideoplayer-release', ext:'aar')
+    compile('com.dabkick.dkvideoplayer:dkvideoplayer:3.0.1') { transitive = true }
 }
