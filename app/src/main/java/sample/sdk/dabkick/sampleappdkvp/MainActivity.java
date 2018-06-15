@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 //        ListView categoriesList = (ListView)findViewById(R.id.categories_list);
 //        MainVerticalListAdapter adapter = new MainVerticalListAdapter(MainActivity.this);
 //        categoriesList.setAdapter(adapter);
+
+        DabkickRegistration.newInstance().register(this);
 
         VideoItemDetail videoItemDetail = new VideoItemDetail("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4", "", "", "", "");
 
