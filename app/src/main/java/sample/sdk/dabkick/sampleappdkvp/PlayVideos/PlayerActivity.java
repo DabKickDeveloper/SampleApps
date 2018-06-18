@@ -6,6 +6,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.livesession.models.StageModel;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
@@ -45,48 +46,33 @@ public class PlayerActivity extends AppCompatActivity {
             desc.setText(detail.getDesc());
             final String detailUrl = detail.getUrl();
 
+            String videoID = detailUrl.substring(detailUrl.lastIndexOf("=") + 1);
 
-            StageModel stageModel = new StageModel();
-            stageModel.setUrl(detailUrl);
+            LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
+                @Override
+                public void onFinishedDownload(String fullStreamURL, boolean success) {
+                    if(success){
 
-            mVideoPlayer.setMediaItem(stageModel);
-            mVideoPlayer.prepare();
-            mVideoPlayer.seekTo(0);
-            mVideoPlayer.play();
-            mVideoPlayer.setVisibility(View.VISIBLE);
+                        StageModel stageModel = new StageModel();
+                        stageModel.setUrl(fullStreamURL);
 
-            mVideoPlayer.addPlayerEventListener(new PlayerActivity.EventListener());
-            mVideoPlayer.addPlayerUIListener(new PlayerActivity.EventListener());
+                        mVideoPlayer.setMediaItem(stageModel);
+                        mVideoPlayer.prepare();
+                        mVideoPlayer.seekTo(0);
+                        mVideoPlayer.play();
+                        mVideoPlayer.setVisibility(View.VISIBLE);
 
-//            String videoID = detailUrl.substring(detailUrl.lastIndexOf("=") + 1);
-//
-//            String url = "https://www.youtube.com/watch?v=" + videoID + "&list=FLEYfH4kbq85W_CiOTuSjf8w&feature=mh_lolz";
+                        mVideoPlayer.addPlayerEventListener(new PlayerActivity.EventListener());
+                        mVideoPlayer.addPlayerUIListener(new PlayerActivity.EventListener());
 
-//            LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
-//                @Override
-//                public void onFinishedDownload(String fullStreamURL, boolean success) {
-//                    if(success){
-//
-//                        StageModel stageModel = new StageModel();
-//                        stageModel.setUrl(detailUrl);
-//
-//                        mVideoPlayer.setMediaItem(stageModel);
-//                        mVideoPlayer.prepare();
-//                        mVideoPlayer.seekTo(0);
-//                        mVideoPlayer.play();
-//                        mVideoPlayer.setVisibility(View.VISIBLE);
-//
-//                        mVideoPlayer.addPlayerEventListener(new PlayerActivity.EventListener());
-//                        mVideoPlayer.addPlayerUIListener(new PlayerActivity.EventListener());
-//
-//                    }else{
-//
-//                        Toast.makeText(PlayerActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
+                    }else{
 
-           // LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, detailUrl);
+                        Toast.makeText(PlayerActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, videoID);
         }
 
     }
