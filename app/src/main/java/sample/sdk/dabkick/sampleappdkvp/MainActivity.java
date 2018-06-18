@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         MainVerticalListAdapter adapter = new MainVerticalListAdapter(MainActivity.this);
         categoriesList.setAdapter(adapter);
 
-        DabkickRegistration.newInstance().register(this);
+
 
        /* VideoItemDetail videoItemDetail = new VideoItemDetail("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4", "", "", "", "");
 

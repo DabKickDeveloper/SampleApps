@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.livesession.models.StageModel;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
+import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
 
 import sample.sdk.dabkick.sampleappdkvp.R;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
@@ -30,14 +31,16 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
+        DabkickRegistration.newInstance().register(this);
+
         init();
     }
 
     void init(){
 
-        title = (TextView) findViewById(R.id.title);
-        desc = (TextView) findViewById(R.id.desc);
-        recomended = (ListView) findViewById(R.id.recomended);
+        title = findViewById(R.id.title);
+        desc = findViewById(R.id.desc);
+        recomended = findViewById(R.id.recomended);
         desc.setMovementMethod(new ScrollingMovementMethod());
         mVideoPlayer = findViewById(R.id.video_view);
 
