@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
 
+        DabkickRegistration.newInstance().register(this);
+
         initViewPager();
 
         ListView categoriesList = (ListView)findViewById(R.id.categories_list);

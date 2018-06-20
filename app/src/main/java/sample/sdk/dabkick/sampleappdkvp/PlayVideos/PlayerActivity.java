@@ -11,9 +11,15 @@ import android.widget.Toast;
 import com.dabkick.dkvideoplayer.livesession.models.StageModel;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
 import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
+import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import sample.sdk.dabkick.sampleappdkvp.R;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
+import timber.log.Timber;
 
 //import at.huber.youtubeExtractor.VideoMeta;
 //import at.huber.youtubeExtractor.YtFile;
@@ -31,7 +37,7 @@ public class PlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        DabkickRegistration.newInstance().register(this);
+        //DabkickRegistration.newInstance().register(this);
 
         init();
     }
@@ -185,5 +191,40 @@ public class PlayerActivity extends AppCompatActivity {
             mVideoPlayer.release();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(NotifyStageVideoReceived event) {
 
+        Timber.d("onMessageEvent: " + event.url);
+
+        if(event.url != null) {
+            StageModel stageModel = new StageModel();
+            stageModel.setUrl(event.url);
+
+            if (mVideoPlayer != null) {
+
+                mVideoPlayer.setVisibility(View.VISIBLE);
+                mVideoPlayer.setMediaItem(stageModel);
+                mVideoPlayer.prepare();
+                mVideoPlayer.seekTo(0);
+                mVideoPlayer.showPopUp = false;
+                mVideoPlayer.play();
+
+                mVideoPlayer.addPlayerEventListener(new EventListener());
+                mVideoPlayer.addPlayerUIListener(new EventListener());
+            }
+
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 }
