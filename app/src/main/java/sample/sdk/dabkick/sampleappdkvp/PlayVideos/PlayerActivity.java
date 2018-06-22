@@ -31,13 +31,15 @@ public class PlayerActivity extends AppCompatActivity {
     TextView desc;
     ListView recomended;
     DkVideoView mVideoPlayer;
+    public static boolean isRegistered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        //DabkickRegistration.newInstance().register(this);
+        if(!isRegistered)
+            DabkickRegistration.newInstance().register(this);
 
         init();
     }
@@ -62,17 +64,8 @@ public class PlayerActivity extends AppCompatActivity {
                 public void onFinishedDownload(String fullStreamURL, boolean success) {
                     if(success){
 
-                        StageModel stageModel = new StageModel();
-                        stageModel.setUrl(fullStreamURL);
-
-                        mVideoPlayer.setMediaItem(stageModel);
-                        mVideoPlayer.prepare();
-                        mVideoPlayer.seekTo(0);
-                        mVideoPlayer.play();
-                        mVideoPlayer.setVisibility(View.VISIBLE);
-
-                        mVideoPlayer.addPlayerEventListener(new PlayerActivity.EventListener());
-                        mVideoPlayer.addPlayerUIListener(new PlayerActivity.EventListener());
+                        mVideoPlayer.setMediaItem(fullStreamURL);
+                        mVideoPlayer.prepare(true);
 
                     }else{
 
@@ -86,102 +79,18 @@ public class PlayerActivity extends AppCompatActivity {
 
     }
 
-    private class EventListener implements DkVideoView.PlayerEventListener,
-            DkVideoView.PlayerUIListener{
-
-        @Override
-        public void OnError(int i, String s) {
-
-        }
-
-
-        @Override
-        public void OnCompleted() {
-
-        }
-
-        @Override
-        public void OnStateChanged(int i) {
-
-        }
-
-        @Override
-        public void OnTimeInfo(long l) {
-
-        }
-
-        @Override
-        public void OnPositionChanged(long l, long l1) {
-
-        }
-
-        @Override
-        public void OnPlay() {
-
-        }
-
-        @Override
-        public void OnPaused() {
-
-        }
-
-        @Override
-        public void OnBuffering() {
-
-        }
-
-        @Override
-        public void OnReady() {
-
-        }
-
-        @Override
-        public void OnUIPlay() {
-
-        }
-
-        @Override
-        public void OnUIPause() {
-
-        }
-
-        @Override
-        public void OnUIFullScreen() {
-
-        }
-
-        @Override
-        public void OnUIReplay() {
-
-        }
-
-        @Override
-        public void OnUISeek() {
-
-        }
-
-        @Override
-        public void OnUiTouch(boolean b) {
-
-        }
-
-        @Override
-        public void OnUiNext() {
-
-        }
-
-        @Override
-        public void OnUiPrevious() {
-
-        }
-
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
         if(mVideoPlayer != null)
-            mVideoPlayer.pause();
+            mVideoPlayer.onPauseCheck();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mVideoPlayer != null)
+            mVideoPlayer.onResumeCheck();
     }
 
     @Override
@@ -196,22 +105,11 @@ public class PlayerActivity extends AppCompatActivity {
 
         Timber.d("onMessageEvent: " + event.url);
 
-        if(event.url != null) {
-            StageModel stageModel = new StageModel();
-            stageModel.setUrl(event.url);
+        if(event.url != null && mVideoPlayer != null) {
 
-            if (mVideoPlayer != null) {
-
-                mVideoPlayer.setVisibility(View.VISIBLE);
-                mVideoPlayer.setMediaItem(stageModel);
-                mVideoPlayer.prepare();
-                mVideoPlayer.seekTo(0);
+                mVideoPlayer.setMediaItem(event.url);
+                mVideoPlayer.prepare(false);
                 mVideoPlayer.showPopUp = false;
-                mVideoPlayer.play();
-
-                mVideoPlayer.addPlayerEventListener(new EventListener());
-                mVideoPlayer.addPlayerUIListener(new EventListener());
-            }
 
         }
     }
@@ -227,4 +125,6 @@ public class PlayerActivity extends AppCompatActivity {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+
 }

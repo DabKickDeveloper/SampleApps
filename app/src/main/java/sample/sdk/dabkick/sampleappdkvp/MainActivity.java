@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         imageModelArrayList = populateList();
 
         DabkickRegistration.newInstance().register(this);
+        PlayerActivity.isRegistered = true;
 
         initViewPager();
 
