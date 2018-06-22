@@ -82,15 +82,15 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(mVideoPlayer != null)
-            mVideoPlayer.onPauseCheck();
+//        if(mVideoPlayer != null)
+//            mVideoPlayer.onPauseCheck();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(mVideoPlayer != null)
-            mVideoPlayer.onResumeCheck();
+//        if(mVideoPlayer != null)
+//            mVideoPlayer.onResumeCheck();
     }
 
     @Override
