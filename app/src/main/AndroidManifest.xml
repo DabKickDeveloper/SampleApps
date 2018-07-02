@@ -24,7 +24,9 @@
             android:value="@string/developer_key" />
 
 
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,6 +37,7 @@
         <activity android:name=".CategoryViewForVideos.VideosOfCategory" />
         <activity
             android:name=".PlayVideos.PlayerActivity"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

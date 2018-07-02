@@ -32,19 +32,22 @@ public class PlayerActivity extends AppCompatActivity {
     ListView recomended;
     DkVideoView mVideoPlayer;
     public static boolean isRegistered = false;
+    DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-        if(!isRegistered)
-            DabkickRegistration.newInstance().register(this);
+//        if (!isRegistered)
+        dabkickRegistration.register(this);
+        isRegistered = true;
 
         init();
     }
 
-    void init(){
+
+    void init() {
 
         title = findViewById(R.id.title);
         desc = findViewById(R.id.desc);
@@ -52,7 +55,7 @@ public class PlayerActivity extends AppCompatActivity {
         desc.setMovementMethod(new ScrollingMovementMethod());
         mVideoPlayer = findViewById(R.id.video_view);
 
-        if(detail != null){
+        if (detail != null) {
             title.setText(detail.getVideoTitle());
             desc.setText(detail.getDesc());
             final String detailUrl = detail.getUrl();
@@ -62,12 +65,12 @@ public class PlayerActivity extends AppCompatActivity {
             LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
                 @Override
                 public void onFinishedDownload(String fullStreamURL, boolean success) {
-                    if(success){
+                    if (success) {
 
                         mVideoPlayer.setMediaItem(fullStreamURL);
                         mVideoPlayer.prepare(true);
 
-                    }else{
+                    } else {
 
                         Toast.makeText(PlayerActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
                     }
@@ -91,12 +94,15 @@ public class PlayerActivity extends AppCompatActivity {
         super.onResume();
 //        if(mVideoPlayer != null)
 //            mVideoPlayer.onResumeCheck();
+        if (!isRegistered)
+            dabkickRegistration.register(this);
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mVideoPlayer != null)
+        if (mVideoPlayer != null)
             mVideoPlayer.release();
     }
 
@@ -105,11 +111,11 @@ public class PlayerActivity extends AppCompatActivity {
 
         Timber.d("onMessageEvent: " + event.url);
 
-        if(event.url != null && mVideoPlayer != null) {
+        if (event.url != null && mVideoPlayer != null) {
 
-                mVideoPlayer.setMediaItem(event.url);
-                mVideoPlayer.prepare(false);
-                mVideoPlayer.showPopUp = false;
+            mVideoPlayer.setMediaItem(event.url);
+            mVideoPlayer.prepare(false);
+            mVideoPlayer.showPopUp = false;
 
         }
     }

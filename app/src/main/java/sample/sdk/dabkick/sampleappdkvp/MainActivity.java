@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         initViewPager();
 
-        ListView categoriesList = (ListView)findViewById(R.id.categories_list);
+        ListView categoriesList = (ListView) findViewById(R.id.categories_list);
         MainVerticalListAdapter adapter = new MainVerticalListAdapter(MainActivity.this);
         categoriesList.setAdapter(adapter);
 
