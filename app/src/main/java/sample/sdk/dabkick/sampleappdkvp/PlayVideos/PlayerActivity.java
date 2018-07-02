@@ -42,8 +42,9 @@ public class PlayerActivity extends AppCompatActivity {
 //        if (!isRegistered)
         dabkickRegistration.register(this);
         isRegistered = true;
-
         init();
+        getLifecycle().addObserver(mVideoPlayer);
+        getLifecycle().addObserver(dabkickRegistration);
     }
 
 
