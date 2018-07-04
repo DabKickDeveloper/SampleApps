@@ -1,10 +1,12 @@
 package sample.sdk.dabkick.sampleappdkvp.PlayVideos;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.Util.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 import timber.log.Timber;
 
@@ -31,7 +34,7 @@ public class PlayerActivity extends AppCompatActivity {
     TextView desc;
     ListView recomended;
     DkVideoView mVideoPlayer;
-    public static boolean isRegistered = false;
+    public static boolean isRegistered = false, onConfigurationChanged = false;
     DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
 
     @Override
@@ -103,8 +106,12 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mVideoPlayer != null)
+        if (mVideoPlayer != null && !onConfigurationChanged)
             mVideoPlayer.release();
+
+        if(onConfigurationChanged)
+            onConfigurationChanged = false;
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -133,5 +140,24 @@ public class PlayerActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        onConfigurationChanged = true;
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            title.setVisibility(View.GONE);
+            desc.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoPlayer.getLayoutParams();
+            params.width=params.MATCH_PARENT;
+            params.height=params.MATCH_PARENT;
+            mVideoPlayer.setLayoutParams(params);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            title.setVisibility(View.VISIBLE);
+            desc.setVisibility(View.VISIBLE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoPlayer.getLayoutParams();
+            params.width=params.MATCH_PARENT;
+            params.height=(int) Util.getInstance().convertDpToPixel(this,200);
+            mVideoPlayer.setLayoutParams(params);
+        }
+    }
 }

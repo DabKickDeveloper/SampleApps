@@ -1,5 +1,7 @@
 package sample.sdk.dabkick.sampleappdkvp.Util;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -34,6 +36,13 @@ public class Util {
         categoryMap = new ConcurrentHashMap<String, ArrayList<VideoItemDetail>>();
         initializeCategoryMap();
 
+    }
+
+    public float convertDpToPixel(Context c, float dp) {
+        float density = c.getResources().getDisplayMetrics().density;
+        float pixel = dp * density;
+
+        return pixel;
     }
 
     void addCategories(){
