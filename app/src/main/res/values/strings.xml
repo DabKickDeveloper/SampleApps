@@ -5,4 +5,6 @@
     <string name="key">Name</string>
     <string name="developer_id">DK29515a9bdf6e11e7a1d8062</string>
     <string name="developer_key">8cfa0c6f6cdc4133a8997013bb4b61</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

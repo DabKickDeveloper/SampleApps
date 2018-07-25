@@ -1,10 +1,17 @@
 package sample.sdk.dabkick.sampleappdkvp;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
@@ -26,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
     private static int currentPage = 0;
     private static int NUM_PAGES = 0;
     private ArrayList<ImageModel> imageModelArrayList;
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+    private DrawerLayout mDrawerLayout;
+    private String mActivityTitle;
 
     private int[] myImageList = new int[]{R.drawable.dabkick1, R.drawable.dabkick2,
             R.drawable.dabkick3, R.drawable.dabkick4
@@ -38,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
+        mDrawerList = (ListView)findViewById(R.id.navList);
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
 
         DabkickRegistration.newInstance().register(this);
         PlayerActivity.isRegistered = true;
@@ -48,7 +65,12 @@ public class MainActivity extends AppCompatActivity {
         MainVerticalListAdapter adapter = new MainVerticalListAdapter(MainActivity.this);
         categoriesList.setAdapter(adapter);
 
+        addDrawerItems();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        setupDrawer();
 
        /* VideoItemDetail videoItemDetail = new VideoItemDetail("http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4", "", "", "", "");
 
@@ -126,5 +148,54 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addDrawerItems() {
+        String[] osArray = { "Home", "Your Videos", "Your Pictures", "Your Playlists", "", "Settings", "Profile", "Contacts" };
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
+        mDrawerList.setAdapter(mAdapter);
+    }
+
+    private void setupDrawer() {
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }else
+            return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 }
