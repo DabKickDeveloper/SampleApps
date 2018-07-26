@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.dabkick3, R.drawable.dabkick4
             , R.drawable.dabkick6, R.drawable.dabkick8};
 
+    ListView categoriesList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
 
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
-        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerList = (ListView) findViewById(R.id.navList);
 
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
 
         DabkickRegistration.newInstance().register(this);
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         initViewPager();
 
-        ListView categoriesList = (ListView) findViewById(R.id.categories_list);
+        categoriesList = (ListView) findViewById(R.id.categories_list);
         MainVerticalListAdapter adapter = new MainVerticalListAdapter(MainActivity.this);
         categoriesList.setAdapter(adapter);
 
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Home", "Your Videos", "Your Pictures", "Your Playlists", "", "Settings", "Profile", "Contacts" };
+        String[] osArray = {"Home", "Your Videos", "Your Pictures", "Your Playlists", "", "Settings", "Profile", "Contacts"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
@@ -165,12 +167,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                mDrawerLayout.bringToFront();
+                mDrawerList.bringToFront();
             }
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                categoriesList.bringToFront();
             }
         };
 
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }else
+        } else
             return super.onOptionsItemSelected(item);
     }
 
@@ -191,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
+        categoriesList.bringToFront();
+
     }
 
     @Override

@@ -19,14 +19,14 @@ public class Util {
     public ArrayList<String> categories;
     public Map<String, ArrayList<VideoItemDetail>> categoryMap;
 
-    public static Util getInstance(){
+    public static Util getInstance() {
 
         if (instance == null)
             instance = new Util();
         return instance;
     }
 
-    public Util(){
+    public Util() {
 
         //Initialize category
         categories = new ArrayList<>();
@@ -45,7 +45,7 @@ public class Util {
         return pixel;
     }
 
-    void addCategories(){
+    void addCategories() {
 
         //Add static values to category
         categories.add("Cartoon");
@@ -56,7 +56,7 @@ public class Util {
 
     }
 
-    void initializeCategoryMap(){
+    void initializeCategoryMap() {
 
         categoryMap.put(categories.get(0), addCartoonVideoDetails());
         categoryMap.put(categories.get(1), addSportsVideoDetails());
@@ -66,11 +66,9 @@ public class Util {
     }
 
 
-    ArrayList<VideoItemDetail> addCartoonVideoDetails(){
+    ArrayList<VideoItemDetail> addCartoonVideoDetails() {
 
-        VideoItemDetail mrBean = new VideoItemDetail("https://www.youtube.com/watch?v=aepV91_3t2c", "https://img.youtube.com/vi/aepV91_3t2c/0.jpg",
-                "Mr Bean Cartoon", "30:16",
-                "Mr. Bean is a British sitcom created by Rowan Atkinson and Richard Curtis, produced by Tiger Aspect Productions, and starring Atkinson as the title character. The sitcom consisted of 15 episodes that were co-written by Atkinson, alongside Curtis and Robin Driscoll; for the pilot, it was co-written by Ben Elton. 14 of the episodes were broadcast on ITV, beginning with the pilot on 1 January 1990,[1] until \"The Best Bits of Mr. Bean\", a compilation episode, on 15 December 1995. The fourteenth episode, \"Hair by Mr. Bean of London\", was not broadcast on television, until 25 August 2006 on Nickelodeon\nCourtesy: Wiki");
+        VideoItemDetail first = new VideoItemDetail("https://www.youtube.com/watch?v=5mHeNHUSY64", "http://i3.ytimg.com/vi/pNWz84Sn1oo/maxresdefault.jpg", "5GreenScreenMinutes", "00:05:00", "5GreenScreenMinutes");
 
         VideoItemDetail mrBean1 = new VideoItemDetail("https://www.youtube.com/watch?v=jRKV1OMkza8", "https://img.youtube.com/vi/jRKV1OMkza8/0.jpg",
                 "Mr Bean Cartoon Full episodes", "22:13",
@@ -108,12 +106,12 @@ public class Util {
                 "Hubby Responsibilities", "02:31",
                 "The show's premise is that it is set in a comical, satirical version of the \"Stone Age\" which, in spite of using primitive technology, resembles mid-20th century suburban America. The plots deliberately resemble the sitcoms of the era, with the caveman Flintstone and Rubble families getting into minor conflicts characteristic of modern life. The show is set in the Stone Age town of Bedrock (pop. 2500). In this fantasy version of the past, dinosaurs and other long-extinct animals co-exist with cavemen, saber-toothed cats, and woolly mammoths. Like their mid-20th century counterparts, these cavemen listen to records, live in split-level homes, and eat at restaurants, yet their technology is made entirely from preindustrial materials and powered primarily through the use of animals. For example, the cars are made out of stone, wood, and animal skins, and powered by the passengers' feet.\nCourtesy: Wiki");
 
-        return new ArrayList<>(Arrays.asList(mrBean, mrBean1, mrBean2, tomAndJerry, tomAndJerry1, tomAndJerry2, flinstones,
+        return new ArrayList<>(Arrays.asList(first, mrBean1, mrBean2, tomAndJerry, tomAndJerry1, tomAndJerry2, flinstones,
                 flinstones1, flinstones2, flinstones3));
 
     }
 
-    ArrayList<VideoItemDetail> addSportsVideoDetails(){
+    ArrayList<VideoItemDetail> addSportsVideoDetails() {
 
         VideoItemDetail squash = new VideoItemDetail("https://www.youtube.com/watch?v=Lbdp-HCjWw8", "https://img.youtube.com/vi/Lbdp-HCjWw8/0.jpg",
                 "Learn Squash", "01:13",
@@ -160,7 +158,7 @@ public class Util {
 
     }
 
-    ArrayList<VideoItemDetail> addTrailersVideoDetails(){
+    ArrayList<VideoItemDetail> addTrailersVideoDetails() {
 
         VideoItemDetail bumbleBee = new VideoItemDetail("https://www.youtube.com/watch?v=fAIX12F6958", "https://img.youtube.com/vi/fAIX12F6958/0.jpg",
                 "Bumble bee", "02:22",
@@ -207,7 +205,7 @@ public class Util {
 
     }
 
-    ArrayList<VideoItemDetail> addTravelVideoDetails(){
+    ArrayList<VideoItemDetail> addTravelVideoDetails() {
 
         VideoItemDetail days = new VideoItemDetail("https://www.youtube.com/watch?v=RcmrbNRK-jY", "https://img.youtube.com/vi/RcmrbNRK-jY/0.jpg",
                 "200 days", "23:24",
@@ -255,7 +253,7 @@ public class Util {
                         "6- 08:20 SHAPL Dr.Nah_New Luggage & Backpack ... https://www.shapl.com\n" +
                         "Would you like to meet cool products with amazing design at affordable prices? Check out SHAPL Dr. Nah.\nCourtesy:Youtube");
 
-        VideoItemDetail switerzland  = new VideoItemDetail("https://www.youtube.com/watch?v=QxP1p3EzOks", "https://img.youtube.com/vi/QxP1p3EzOks/0.jpg",
+        VideoItemDetail switerzland = new VideoItemDetail("https://www.youtube.com/watch?v=QxP1p3EzOks", "https://img.youtube.com/vi/QxP1p3EzOks/0.jpg",
                 "Swiz Travel guide", "15:07",
                 "Switzerland (/ˈswɪtsərlənd/), officially the Swiss Confederation, is a sovereign state in Europe. It consists of 26 cantons, and the city of Bern is the seat of the federal authorities.[1][2][note 1] The federal republic is situated in Western-Central Europe,[note 4] and is bordered by Italy to the south, France to the west, Germany to the north, and Austria and Liechtenstein to the east. Switzerland is a landlocked country geographically divided between the Alps, the Swiss Plateau and the Jura, spanning a total area of 41,285 km2 (15,940 sq mi) (land area 39,997 km2 (15,443 sq mi)). While the Alps occupy the greater part of the territory, the Swiss population of approximately eight million people is concentrated mostly on the plateau, where the largest cities are to be found: among them are the two global cities and economic centres Zürich and Geneva.\nCourtesy: Wiki");
 
@@ -274,7 +272,7 @@ public class Util {
 
     }
 
-    ArrayList<VideoItemDetail> addTechnologyVideoDetails(){
+    ArrayList<VideoItemDetail> addTechnologyVideoDetails() {
 
         VideoItemDetail sec = new VideoItemDetail("https://www.youtube.com/watch?v=-6ZbrfSRWKc", "https://img.youtube.com/vi/-6ZbrfSRWKc/0.jpg",
                 "Security Engineer at Google", "02:04",
@@ -302,10 +300,10 @@ public class Util {
                 "Readme Essentials", "03:56",
                 "The basics of writing a project README in Markdown.\nCourtesy:Youtube");
 
-            VideoItemDetail beginners = new VideoItemDetail("https://www.youtube.com/watch?v=0fKg7e37bQE", "https://img.youtube.com/vi/0fKg7e37bQE/0.jpg",
+        VideoItemDetail beginners = new VideoItemDetail("https://www.youtube.com/watch?v=0fKg7e37bQE", "https://img.youtube.com/vi/0fKg7e37bQE/0.jpg",
                 "GitHub for Beginners", "18:53",
-                    "Github Tutorial For Beginners - learn Github for Mac or Github for windows\n" +
-                            "If you've been wanting to learn Github, now's the perfect time!  Github is seen as a big requirement by most employers these days and is very critical to business workflow.  This Github tutorial will cover the basics of how to use Github and the command line.\nCourtesy:Youtube");
+                "Github Tutorial For Beginners - learn Github for Mac or Github for windows\n" +
+                        "If you've been wanting to learn Github, now's the perfect time!  Github is seen as a big requirement by most employers these days and is very critical to business workflow.  This Github tutorial will cover the basics of how to use Github and the command line.\nCourtesy:Youtube");
 
         VideoItemDetail acquisition = new VideoItemDetail("https://www.youtube.com/watch?v=m164XggdRGA", "https://img.youtube.com/vi/m164XggdRGA/0.jpg",
                 "GitHub Acquisition", "08:37",
@@ -321,7 +319,7 @@ public class Util {
                         "4. IoT features\n" +
                         "5. IoT Demo - Weather Station application using Raspberry Pi and Sense Hat\nCourtesy:Youtube");
 
-        VideoItemDetail IotWorking  = new VideoItemDetail("https://www.youtube.com/watch?v=QSIPNhOiMoE", "https://img.youtube.com/vi/QSIPNhOiMoE/0.jpg",
+        VideoItemDetail IotWorking = new VideoItemDetail("https://www.youtube.com/watch?v=QSIPNhOiMoE", "https://img.youtube.com/vi/QSIPNhOiMoE/0.jpg",
                 "IoT Working", "03:38",
                 "The Internet of Things gives us access to the data from millions of devices. But how does it work, and what can we do with all that data?\nCourtesy:Youtube");
 
@@ -344,4 +342,10 @@ public class Util {
                 IotWorking, amazonGo, best5));
 
     }
+
+    ArrayList<VideoItemDetail> addSpecialCategoryVideos() {
+        VideoItemDetail first = new VideoItemDetail("https://www.youtube.com/watch?v=pNWz84Sn1oo", "http://i3.ytimg.com/vi/pNWz84Sn1oo/maxresdefault.jpg", "4k Green Screen - 10 Hours", "10:00:36", "4k Green Screen - 10 Hours");
+        return new ArrayList<>(Arrays.asList(first));
+    }
+
 }
