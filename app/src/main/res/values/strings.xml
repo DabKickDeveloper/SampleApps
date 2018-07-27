@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SampleAppDKVP</string>
     <string name="category">Category</string>
-    <string name="more">More</string>
+    <string name="more">See more</string>
     <string name="key">Name</string>
     <string name="developer_id">DK29515a9bdf6e11e7a1d8062</string>
     <string name="developer_key">8cfa0c6f6cdc4133a8997013bb4b61</string>
