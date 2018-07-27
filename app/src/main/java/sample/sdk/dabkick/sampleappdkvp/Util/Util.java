@@ -350,7 +350,7 @@ public class Util {
 
     public String getCategory(String videoUrl){
 
-        String category = "";
+        String category = categories.get(0);
 
         for(int i = 0; i < categories.size(); i++){
             for(VideoItemDetail item: categoryMap.get(categories.get(i))){
