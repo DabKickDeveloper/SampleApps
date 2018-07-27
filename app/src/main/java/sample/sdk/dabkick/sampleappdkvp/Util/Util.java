@@ -382,4 +382,20 @@ public class Util {
         return item;
     }
 
+    public ArrayList<VideoItemDetail> getAllVideos(){
+
+        ArrayList<VideoItemDetail> details = new ArrayList<>();
+
+        for(int i = 0; i < categories.size(); i++){
+
+            for(VideoItemDetail item: categoryMap.get(categories.get(i))){
+
+                details.add(item);
+
+            }
+        }
+
+        return  details;
+    }
+
 }

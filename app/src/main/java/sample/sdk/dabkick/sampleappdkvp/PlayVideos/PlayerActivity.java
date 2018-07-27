@@ -102,11 +102,8 @@ public class PlayerActivity extends AppCompatActivity {
         if (event.url != null && mVideoPlayer != null) {
 
             if(recomended.getAdapter() == null) {
-                String category = Util.getInstance().getCategory(event.url);
-                ArrayList<VideoItemDetail> categoryVideos = Util.getInstance().categoryMap.get(category);
-                videos.addAll(categoryVideos);
-                VideoItemDetail item = Util.getInstance().getVideo(event.url,category);
-                videos.remove(item);
+
+                videos.addAll(Util.getInstance().getAllVideos());
 
                 RecomendedListAdapter adapter = new RecomendedListAdapter(PlayerActivity.this, videos);
                 recomended.setAdapter(adapter);
@@ -160,10 +157,8 @@ public class PlayerActivity extends AppCompatActivity {
             desc.setText(detail.getDesc());
             final String detailUrl = detail.getUrl();
 
-            String category = Util.getInstance().getCategory(detailUrl);
-            ArrayList<VideoItemDetail> categoryVideos = Util.getInstance().categoryMap.get(category);
             videos.clear();
-            videos.addAll(categoryVideos);
+            videos.addAll(Util.getInstance().getAllVideos());
             videos.remove(detail);
 
             if(recomended.getAdapter() == null) {
