@@ -31,6 +31,6 @@ dependencies {
     compile 'it.sephiroth.android.library.horizontallistview:hlistview:1.2.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-    compile('com.dabkick.dkvideoplayer:dkvideoplayer:3.0.1') { transitive = true; changing = true }
+    compile('com.dabkick.dkvideoplayer:dkvideoplayer:4.0.1') { transitive = true; changing = true }
     compile 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
 }

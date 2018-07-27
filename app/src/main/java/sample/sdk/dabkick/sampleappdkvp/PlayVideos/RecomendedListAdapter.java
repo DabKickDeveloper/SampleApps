@@ -70,6 +70,8 @@ public class RecomendedListAdapter extends BaseAdapter {
                 if(((PlayerActivity)mContext).mVideoPlayer.isPlaying())
                     ((PlayerActivity)mContext).mVideoPlayer.pause();
 
+                ((PlayerActivity)mContext).mVideoPlayer.release();
+
                 PlayerActivity.detail = videos.get(i);
                 ((PlayerActivity) mContext).play();
             }

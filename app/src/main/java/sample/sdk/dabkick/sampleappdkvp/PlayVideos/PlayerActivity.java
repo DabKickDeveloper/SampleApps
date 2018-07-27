@@ -112,6 +112,7 @@ public class PlayerActivity extends AppCompatActivity {
                 recomended.setAdapter(adapter);
             }
 
+            mVideoPlayer.release();
             mVideoPlayer.setMediaItem(event.url);
             mVideoPlayer.prepare(false);
             mVideoPlayer.showPopUp = false;
