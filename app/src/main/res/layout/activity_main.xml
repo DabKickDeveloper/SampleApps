@@ -27,19 +27,19 @@
             android:gravity="bottom"
             android:padding="10dip"
             app:centered="true"
-            app:fillColor="#df0623"
+            app:fillColor="#000"
             app:pageColor="#fff"
             app:snap="false" />
 
     </RelativeLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/categories_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/slideshow">
 
-    </ListView>
+    </android.support.v7.widget.RecyclerView>
 
     <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

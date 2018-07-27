@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity;
 import sample.sdk.dabkick.sampleappdkvp.R;
@@ -24,10 +24,10 @@ import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 
 public class CategoryListViewAdapter extends BaseAdapter {
 
-    ArrayList<VideoItemDetail> videoItemDetails;
+    List<VideoItemDetail> videoItemDetails;
     Context mActivity;
 
-    CategoryListViewAdapter(Context mActivity, ArrayList<VideoItemDetail> videoItemDetails){
+    CategoryListViewAdapter(Context mActivity, List<VideoItemDetail> videoItemDetails){
 
         this.mActivity = mActivity;
         this.videoItemDetails = videoItemDetails;
@@ -65,7 +65,7 @@ public class CategoryListViewAdapter extends BaseAdapter {
         TextView videoTitle = (TextView)rowView.findViewById(R.id.video_desc);
         TextView duration = (TextView)rowView.findViewById(R.id.duration);
 
-        videoTitle.setText(videoItemDetails.get(position).getVideoTitle());
+        videoTitle.setText(videoItemDetails.get(position).getTitle());
         duration.setText(videoItemDetails.get(position).getDuration());
 
         RelativeLayout clickableLayout = (RelativeLayout)rowView.findViewById(R.id.clickable_layout);

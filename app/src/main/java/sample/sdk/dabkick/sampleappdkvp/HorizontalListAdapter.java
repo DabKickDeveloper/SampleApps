@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp.MainViewVideos;
+package sample.sdk.dabkick.sampleappdkvp;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,12 +12,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import sample.sdk.dabkick.sampleappdkvp.R;
+import sample.sdk.dabkick.sampleappdkvp.PlayListModels.Video;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
-
-/**
- * Created by iFocus on 11-06-2018.
- */
 
 public class HorizontalListAdapter extends BaseAdapter {
 

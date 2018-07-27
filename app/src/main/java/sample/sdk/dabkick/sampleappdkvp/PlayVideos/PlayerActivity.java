@@ -10,7 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dabkick.dkvideoplayer.livesession.models.StageModel;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
 import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
 import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
@@ -20,7 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import sample.sdk.dabkick.sampleappdkvp.R;
-import sample.sdk.dabkick.sampleappdkvp.Util.Util;
+import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 import timber.log.Timber;
 
@@ -60,7 +59,7 @@ public class PlayerActivity extends AppCompatActivity {
         mVideoPlayer = findViewById(R.id.video_view);
 
         if (detail != null) {
-            title.setText(detail.getVideoTitle());
+            title.setText(detail.getTitle());
             desc.setText(detail.getDesc());
             final String detailUrl = detail.getUrl();
 

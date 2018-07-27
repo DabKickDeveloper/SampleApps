@@ -1,30 +1,20 @@
-package sample.sdk.dabkick.sampleappdkvp.MainViewVideos;
+package sample.sdk.dabkick.sampleappdkvp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.dabkick.dkvideoplayer.livesession.stage.VideoManager;
+import sample.sdk.dabkick.sampleappdkvp.PlayListModels.Video;
+import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 
-import java.util.List;
 import java.util.ArrayList;
 
 import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
-import sample.sdk.dabkick.sampleappdkvp.CategoryViewForVideos.VideosOfCategory;
-import sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity;
-import sample.sdk.dabkick.sampleappdkvp.R;
-import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
-import sample.sdk.dabkick.sampleappdkvp.PlayListModels.Video;
-
-/**
- * Created by iFocus on 11-06-2018.
- */
 
 public class MainVerticalListAdapter extends BaseAdapter {
 
@@ -69,18 +59,16 @@ public class MainVerticalListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(mActivity, VideosOfCategory.class);
-                List<VideoItemDetail> videoItemDetails = Util.getInstance().videosForPlaylists.get(categoryText);
-                VideosOfCategory.videos = videoItemDetails;
-                intent.putExtra("Name", categoryText);
-                mActivity.startActivity(intent);
+//                Intent intent = new Intent(mActivity, VideosOfCategory.class);
+//                VideosOfCategory.videos = Util.getInstance().categoryMap.get(categoryText);
+//                intent.putExtra("Name", categoryText);
+//                mActivity.startActivity(intent);
 
             }
         });
 
         HListView listView = (HListView) rowView.findViewById(R.id.videos_list);
-        final List<VideoItemDetail> videoItemDetails  = Util.getInstance().videosForPlaylists.get(categoryText).subList(0,4);
-
+        ArrayList<VideoItemDetail> videoItemDetails = new ArrayList<VideoItemDetail>((Util.getInstance().videosForPlaylists.get(categoryText)).subList(0,4));
         HorizontalListAdapter adapter = new HorizontalListAdapter(mActivity, videoItemDetails);
         listView.setAdapter(adapter);
 
@@ -88,11 +76,9 @@ public class MainVerticalListAdapter extends BaseAdapter {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 
-                Intent intent = new Intent(mActivity, PlayerActivity.class);
-                VideoItemDetail videoItemDetail = Util.getInstance().videosForPlaylists.get(categoryText).get(pos);
-
-                PlayerActivity.detail = videoItemDetail;
-                mActivity.startActivity(intent);
+//                Intent intent = new Intent(mActivity, PlayerActivity.class);
+//                PlayerActivity.detail = (Util.getInstance().categoryMap.get(categoryText)).get(pos);
+//                mActivity.startActivity(intent);
             }
         });
 
