@@ -61,8 +61,9 @@ public class MainVerticalListAdapter extends BaseAdapter {
         }
 
         TextView category = (TextView) rowView.findViewById(R.id.category);
-        final String categoryText = Util.getInstance().playLists.get(position).getPlaylistId();
+        final String categoryText = Util.getInstance().playLists.get(position).getName();
         category.setText(categoryText);
+        final String categoryId = Util.getInstance().playLists.get(position).getPlaylistId();
 
         TextView more = (TextView) rowView.findViewById(R.id.more);
         more.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +71,7 @@ public class MainVerticalListAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 Intent intent = new Intent(mActivity, VideosOfCategory.class);
-                List<VideoItemDetail> videoItemDetails = Util.getInstance().videosForPlaylists.get(categoryText);
+                List<VideoItemDetail> videoItemDetails = Util.getInstance().videosForPlaylists.get(categoryId);
                 VideosOfCategory.videos = videoItemDetails;
                 intent.putExtra("Name", categoryText);
                 mActivity.startActivity(intent);
@@ -78,8 +79,8 @@ public class MainVerticalListAdapter extends BaseAdapter {
             }
         });
 
-        HListView listView = (HListView) rowView.findViewById(R.id.videos_list);
-        final List<VideoItemDetail> videoItemDetails  = Util.getInstance().videosForPlaylists.get(categoryText).subList(0,4);
+        HListView listView = rowView.findViewById(R.id.videos_list);
+        final List<VideoItemDetail> videoItemDetails  = Util.getInstance().videosForPlaylists.get(categoryId).subList(0,4);
 
         HorizontalListAdapter adapter = new HorizontalListAdapter(mActivity, videoItemDetails);
         listView.setAdapter(adapter);
@@ -89,7 +90,7 @@ public class MainVerticalListAdapter extends BaseAdapter {
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 
                 Intent intent = new Intent(mActivity, PlayerActivity.class);
-                VideoItemDetail videoItemDetail = Util.getInstance().videosForPlaylists.get(categoryText).get(pos);
+                VideoItemDetail videoItemDetail = Util.getInstance().videosForPlaylists.get(categoryId).get(pos);
 
                 PlayerActivity.detail = videoItemDetail;
                 mActivity.startActivity(intent);

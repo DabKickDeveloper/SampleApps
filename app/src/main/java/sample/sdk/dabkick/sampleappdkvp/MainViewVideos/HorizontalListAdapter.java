@@ -56,8 +56,8 @@ public class HorizontalListAdapter extends BaseAdapter {
             rowView = convertView;
         }
 
-        ImageView thumbnailImg = (ImageView) rowView.findViewById(R.id.thumbnail);
-        TextView videoDesc = (TextView) rowView.findViewById(R.id.video_desc);
+        ImageView thumbnailImg = rowView.findViewById(R.id.thumbnail);
+        TextView videoDesc = rowView.findViewById(R.id.video_desc);
 
         Picasso.with(mActivity).setLoggingEnabled(true);
         Picasso.with(mActivity)

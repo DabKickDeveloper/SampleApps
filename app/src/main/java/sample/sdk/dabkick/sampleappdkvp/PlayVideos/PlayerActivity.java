@@ -31,7 +31,7 @@ public class PlayerActivity extends AppCompatActivity {
     public static VideoItemDetail detail;
     TextView title;
     TextView desc;
-    ListView recomended;
+    ListView recommended;
     DkVideoView mVideoPlayer;
     public static boolean isRegistered = false, onConfigurationChanged = false;
     DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
@@ -54,7 +54,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         title = findViewById(R.id.title);
         desc = findViewById(R.id.desc);
-        recomended = findViewById(R.id.recomended);
+        recommended = findViewById(R.id.recomended);
         desc.setMovementMethod(new ScrollingMovementMethod());
         mVideoPlayer = findViewById(R.id.video_view);
 
@@ -119,7 +119,6 @@ public class PlayerActivity extends AppCompatActivity {
         Timber.d("onMessageEvent: " + event.url);
 
         if (event.url != null && mVideoPlayer != null) {
-
             mVideoPlayer.setMediaItem(event.url);
             mVideoPlayer.prepare(false);
             mVideoPlayer.showPopUp = false;
