@@ -348,4 +348,38 @@ public class Util {
         return new ArrayList<>(Arrays.asList(first));
     }
 
+    public String getCategory(String videoUrl){
+
+        String category = "";
+
+        for(int i = 0; i < categories.size(); i++){
+            for(VideoItemDetail item: categoryMap.get(categories.get(i))){
+
+                if(item.getUrl().contentEquals(videoUrl)){
+
+                    category = categories.get(i);
+                    break;
+                }
+            }
+        }
+
+        return category;
+    }
+
+    public VideoItemDetail getVideo(String url, String category){
+
+        ArrayList<VideoItemDetail> videos = Util.getInstance().categoryMap.get(category);
+        VideoItemDetail item = null;
+        for(VideoItemDetail detail : videos){
+
+            if(detail.getUrl().contentEquals(url)){
+
+                item = detail;
+                break;
+            }
+        }
+
+        return item;
+    }
+
 }
