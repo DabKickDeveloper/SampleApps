@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getPlaylists();
+
         setContentView(R.layout.activity_main);
         util = Util.getInstance();
         mDrawerList = findViewById(R.id.navList);
@@ -56,14 +59,13 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        getPlaylists();
 
         setupDrawer();
     }
 
 
     private void addDrawerItems() {
-        String[] osArray = {"Home", "Your Videos", "Your Pictures", "Your Playlists", "", "Settings", "Profile", "Contacts"};
+        String[] osArray = {"Home", "Settings"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
