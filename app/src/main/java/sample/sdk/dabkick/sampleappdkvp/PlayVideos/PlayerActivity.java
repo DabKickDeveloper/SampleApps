@@ -61,9 +61,8 @@ public class PlayerActivity extends AppCompatActivity {
         if (detail != null) {
             title.setText(detail.getTitle());
             desc.setText(detail.getDesc());
-            final String detailUrl = detail.getUrl();
 
-            String videoID = detailUrl.substring(detailUrl.lastIndexOf("=") + 1);
+            String videoID = detail.getId();
 
             LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
                 @Override
@@ -80,7 +79,7 @@ public class PlayerActivity extends AppCompatActivity {
                 }
             });
 
-            LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, videoID);
+            LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, videoID, null);
         }
 
     }

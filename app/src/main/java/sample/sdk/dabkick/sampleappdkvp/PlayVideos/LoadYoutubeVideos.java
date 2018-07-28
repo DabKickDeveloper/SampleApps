@@ -35,9 +35,16 @@ public class LoadYoutubeVideos {
         void onFinishedDownload(String fullStreamURL, boolean success);
     }
 
-    public void loadYoutubeURL(Activity mActivity, String videoID){
+    public void loadYoutubeURL(Activity mActivity, String videoID, String playlistID){
 
-        String url = "https://www.youtube.com/watch?v=" + videoID + "&list=FLEYfH4kbq85W_CiOTuSjf8w&feature=mh_lolz";
+        String url;
+        if (playlistID == null) {
+            url = "https://www.youtube.com/watch?v=" + videoID;
+        }
+        else {
+            url = "https://www.youtube.com/watch?v=" + videoID + "&list=FLEYfH4kbq85W_CiOTuSjf8w&feature=mh_lolz";
+        }
+
 
         new at.huber.youtubeExtractor.YouTubeExtractor(mActivity) {
             @Override
