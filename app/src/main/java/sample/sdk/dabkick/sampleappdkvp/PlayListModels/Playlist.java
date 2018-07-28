@@ -12,6 +12,11 @@ public class Playlist {
     @SerializedName("playlistId")
     @Expose
     private String playlistId;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
     @SerializedName("videos")
     @Expose
     private List<VideoItemDetail> videos = null;
@@ -22,6 +27,14 @@ public class Playlist {
 
     public void setPlaylistId(String playlistId) {
         this.playlistId = playlistId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<VideoItemDetail> getVideos() {
