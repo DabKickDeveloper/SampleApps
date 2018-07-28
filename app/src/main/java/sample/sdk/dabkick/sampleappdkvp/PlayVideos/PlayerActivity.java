@@ -18,6 +18,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sample.sdk.dabkick.sampleappdkvp.R;
 import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
@@ -35,6 +38,7 @@ public class PlayerActivity extends AppCompatActivity {
     DkVideoView mVideoPlayer;
     public static boolean isRegistered = false, onConfigurationChanged = false;
     DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
+    ArrayList<VideoItemDetail> videos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,31 +61,9 @@ public class PlayerActivity extends AppCompatActivity {
         recommended = findViewById(R.id.recomended);
         desc.setMovementMethod(new ScrollingMovementMethod());
         mVideoPlayer = findViewById(R.id.video_view);
+        videos = new ArrayList<>();
 
-        if (detail != null) {
-            title.setText(detail.getTitle());
-            desc.setText(detail.getDesc());
-
-            String videoID = detail.getId();
-
-            LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
-                @Override
-                public void onFinishedDownload(String fullStreamURL, boolean success) {
-                    if (success) {
-
-                        mVideoPlayer.setMediaItem(fullStreamURL);
-                        mVideoPlayer.prepare(true);
-
-                    } else {
-
-                        Toast.makeText(PlayerActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, videoID, null);
-        }
-
+        play();
     }
 
     @Override
@@ -118,6 +100,17 @@ public class PlayerActivity extends AppCompatActivity {
         Timber.d("onMessageEvent: " + event.url);
 
         if (event.url != null && mVideoPlayer != null) {
+            if(recommended.getAdapter() == null) {
+
+                for (List<VideoItemDetail> videosList : Util.getInstance().videosForPlaylists.values()) {
+                    videos.addAll(videosList);
+                }
+
+                RecomendedListAdapter adapter = new RecomendedListAdapter(PlayerActivity.this, videos);
+                recommended.setAdapter(adapter);
+            }
+
+            mVideoPlayer.release();
             mVideoPlayer.setMediaItem(event.url);
             mVideoPlayer.prepare(false);
             mVideoPlayer.showPopUp = false;
@@ -155,6 +148,53 @@ public class PlayerActivity extends AppCompatActivity {
             params.width=params.MATCH_PARENT;
             params.height=(int) Util.getInstance().convertDpToPixel(this,200);
             mVideoPlayer.setLayoutParams(params);
+        }
+    }
+
+    public void play(){
+
+        if (detail != null) {
+            title.setText(detail.getTitle());
+            desc.setText(detail.getDesc());
+            final String detailUrl = detail.getUrl();
+
+            videos.clear();
+
+            for (List<VideoItemDetail> videosList : Util.getInstance().videosForPlaylists.values()) {
+                videos.addAll(videosList);
+            }
+
+            videos.remove(detail);
+
+            if(recommended.getAdapter() == null) {
+                RecomendedListAdapter adapter = new RecomendedListAdapter(PlayerActivity.this, videos);
+                recommended.setAdapter(adapter);
+            }else{
+
+                RecomendedListAdapter adapter = (RecomendedListAdapter)recommended.getAdapter();
+                /*adapter.videos.clear();
+                adapter.videos = videos;*/
+                adapter.notifyDataSetChanged();
+            }
+
+            String videoID = detail.getId();
+
+            LoadYoutubeVideos.getInstance().setOnFinishedDownload(new LoadYoutubeVideos.OnFinishedDownloadListener() {
+                @Override
+                public void onFinishedDownload(String fullStreamURL, boolean success) {
+                    if (success) {
+
+                        mVideoPlayer.setMediaItem(fullStreamURL);
+                        mVideoPlayer.prepare(true);
+
+                    } else {
+
+                        Toast.makeText(PlayerActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            LoadYoutubeVideos.getInstance().loadYoutubeURL(PlayerActivity.this, videoID, null);
         }
     }
 }
