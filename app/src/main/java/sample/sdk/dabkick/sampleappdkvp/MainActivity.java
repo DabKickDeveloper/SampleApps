@@ -97,10 +97,9 @@ public class MainActivity extends AppCompatActivity {
                     util.appTitleString = response.body().getAppTitle();
                     for (int i = 0; i < response.body().getPlaylists().size(); i++) {
                         util.videosForPlaylists.put(response.body().getPlaylists().get(i).getPlaylistId(), response.body().getPlaylists().get(i).getVideos());
-
                         // TODO: duration and url of the VideoItemDetails are not yet set
                     }
-
+                    //Setting the adapter with new data
                     categoriesList.setAdapter(adapter);
                 } else {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.server_error), Toast.LENGTH_LONG).show();
