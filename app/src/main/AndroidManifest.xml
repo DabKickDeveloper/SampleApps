@@ -37,7 +37,6 @@
         <activity android:name=".CategoryViewForVideos.VideosOfCategory" />
         <activity
             android:name=".PlayVideos.PlayerActivity"
-            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="orientation|screenSize">
             <intent-filter>
