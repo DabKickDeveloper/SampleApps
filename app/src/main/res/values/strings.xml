@@ -7,4 +7,5 @@
     <string name="developer_key">8cfa0c6f6cdc4133a8997013bb4b61</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="server_error">Network error, please try later</string>
 </resources>

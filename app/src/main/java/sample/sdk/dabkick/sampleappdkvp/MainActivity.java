@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -100,16 +101,15 @@ public class MainActivity extends AppCompatActivity {
                         // TODO: duration and url of the VideoItemDetails are not yet set
                     }
 
-                    adapter.notifyDataSetChanged();
-                }
-                else {
-                    // TODO: Show error message
+                    categoriesList.setAdapter(adapter);
+                } else {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.server_error), Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<PlayListModel> call, Throwable t) {
-                // TODO: Show error message
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.server_error), Toast.LENGTH_LONG).show();
             }
         });
     }
