@@ -201,6 +201,13 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerList.bringToFront();
             }
 
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                mDrawerLayout.bringToFront();
+                mDrawerList.bringToFront();
+            }
+
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
@@ -208,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 categoriesList.bringToFront();
             }
         };
+
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
