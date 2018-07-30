@@ -5,32 +5,36 @@
     android:layout_marginTop="10dp">
 
     <TextView
+        android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/category"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@+id/more"
+        android:singleLine="true"
         android:text="@string/category"
-        android:textSize="18sp"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginLeft="5dp"/>
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/more"
-        android:text="@string/more"
-        android:textSize="16sp"
-        android:textColor="@color/red"
-        android:textStyle="bold"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"/>
+        android:layout_marginRight="10dp"
+        android:text="@string/more"
+        android:textColor="@color/red"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <it.sephiroth.android.library.widget.HListView
+        android:id="@+id/videos_list"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/category"
-        android:id="@+id/videos_list"
+        android:layout_marginTop="10dp"
         android:listSelector="#00000000">
 
     </it.sephiroth.android.library.widget.HListView>
