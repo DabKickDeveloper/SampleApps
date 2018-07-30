@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,7 +37,7 @@ import sample.sdk.dabkick.sampleappdkvp.Utils.RetrofitInit;
 import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -111,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.server_error), Toast.LENGTH_LONG).show();
             }
         });
+
+        mDrawerList.setOnItemClickListener(this);
     }
 
     private ArrayList<ImageModel> populateList() {
@@ -183,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = {"Home", "Your Videos", "Your Pictures", "Your Playlists", "", "Settings", "Profile", "Contacts"};
+        String[] osArray = {"Home", "Settings"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
@@ -250,5 +253,10 @@ public class MainActivity extends AppCompatActivity {
         String urlString = RetrofitInit.BASE_URL + "videoPlayer/v1/getAppInfo.php?appName=" + getPackageName();
         Call<PlayListModel> playListModelCall = videoDetailsInterface.getPlayLists(urlString);
         playListModelCall.enqueue(callback);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        mDrawerLayout.closeDrawers();
     }
 }
