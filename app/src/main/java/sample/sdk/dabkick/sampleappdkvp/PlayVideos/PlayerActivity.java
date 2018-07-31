@@ -89,7 +89,7 @@ public class PlayerActivity extends AppCompatActivity {
         if (mVideoPlayer != null && !onConfigurationChanged)
             mVideoPlayer.release();
 
-        if(onConfigurationChanged)
+        if (onConfigurationChanged)
             onConfigurationChanged = false;
 
     }
@@ -100,7 +100,7 @@ public class PlayerActivity extends AppCompatActivity {
         Timber.d("onMessageEvent: " + event.url);
 
         if (event.url != null && mVideoPlayer != null) {
-            if(recommended.getAdapter() == null) {
+            if (recommended.getAdapter() == null) {
 
                 for (List<VideoItemDetail> videosList : Util.getInstance().videosForPlaylists.values()) {
                     videos.addAll(videosList);
@@ -121,13 +121,18 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Override
@@ -138,20 +143,20 @@ public class PlayerActivity extends AppCompatActivity {
             title.setVisibility(View.GONE);
             desc.setVisibility(View.GONE);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoPlayer.getLayoutParams();
-            params.width=params.MATCH_PARENT;
-            params.height=params.MATCH_PARENT;
+            params.width = params.MATCH_PARENT;
+            params.height = params.MATCH_PARENT;
             mVideoPlayer.setLayoutParams(params);
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             title.setVisibility(View.VISIBLE);
             desc.setVisibility(View.VISIBLE);
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mVideoPlayer.getLayoutParams();
-            params.width=params.MATCH_PARENT;
-            params.height=(int) Util.getInstance().convertDpToPixel(this,200);
+            params.width = params.MATCH_PARENT;
+            params.height = (int) Util.getInstance().convertDpToPixel(this, 200);
             mVideoPlayer.setLayoutParams(params);
         }
     }
 
-    public void play(){
+    public void play() {
 
         if (detail != null) {
             title.setText(detail.getTitle());
@@ -166,12 +171,12 @@ public class PlayerActivity extends AppCompatActivity {
 
             videos.remove(detail);
 
-            if(recommended.getAdapter() == null) {
+            if (recommended.getAdapter() == null) {
                 RecomendedListAdapter adapter = new RecomendedListAdapter(PlayerActivity.this, videos);
                 recommended.setAdapter(adapter);
-            }else{
+            } else {
 
-                RecomendedListAdapter adapter = (RecomendedListAdapter)recommended.getAdapter();
+                RecomendedListAdapter adapter = (RecomendedListAdapter) recommended.getAdapter();
                 /*adapter.videos.clear();
                 adapter.videos = videos;*/
                 adapter.notifyDataSetChanged();
