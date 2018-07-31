@@ -38,7 +38,8 @@
         <activity
             android:name=".PlayVideos.PlayerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
