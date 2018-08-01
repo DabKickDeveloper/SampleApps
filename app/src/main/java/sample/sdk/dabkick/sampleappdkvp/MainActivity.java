@@ -1,6 +1,5 @@
 package sample.sdk.dabkick.sampleappdkvp;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
 import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
+import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
 import com.viewpagerindicator.CirclePageIndicator;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +43,7 @@ import sample.sdk.dabkick.sampleappdkvp.Slideshow.SlidingImage_Adapter;
 import sample.sdk.dabkick.sampleappdkvp.Utils.RetrofitInit;
 import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -57,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             R.drawable.dabkick6, R.drawable.dabkick8};
 
     ListView categoriesList;
+    DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
+    public DkVideoView mVideoPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +76,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imageModelArrayList = populateList();
         mDrawerList = findViewById(R.id.navList);
 
+        mVideoPlayer = findViewById(R.id.video_view);
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
 
-        DabkickRegistration.newInstance().register(this);
-        PlayerActivity.isRegistered = true;
+        dabkickRegistration.register(this);
+        getLifecycle().addObserver(mVideoPlayer);
+        getLifecycle().addObserver(dabkickRegistration);
 
         initViewPager();
 
@@ -107,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     String defaultVideoId = response.body().getDefaultVideoId();
                     if (defaultVideoId != null && !defaultVideoId.equals("")) {
-                        playDefaultVideo(defaultVideoId);
+                        play(defaultVideoId);
                     }
                     else if (playlists != null && playlists.size() > 0) {
                         // If there is a video in the playlists, play the first one
@@ -117,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             if (videos != null && videos.size() > 0) {
                                 VideoItemDetail videoItemDetail = videos.get(0);
                                 if (videoItemDetail != null) {
-                                    playDefaultVideo(videoItemDetail.getId());
+                                    play(videoItemDetail.getId());
                                 }
                             }
                         }
@@ -237,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 super.onDrawerClosed(view);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
                 categoriesList.bringToFront();
+                mVideoPlayer.bringToFront();
             }
         };
 
@@ -281,7 +293,57 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerLayout.closeDrawers();
     }
 
-    private void playDefaultVideo(String defaultVideoId) {
-        // TODO: Play video with default video ID
+    public void play(String defaultVideoId) {
+
+            String videoID = defaultVideoId;
+
+            sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.getInstance().setOnFinishedDownload(new sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.OnFinishedDownloadListener() {
+                @Override
+                public void onFinishedDownload(String fullStreamURL, boolean success) {
+                    if (success) {
+
+                        mVideoPlayer.setMediaItem(fullStreamURL);
+                        mVideoPlayer.prepare(true);
+                        mVideoPlayer.bringToFront();
+
+                    } else {
+
+                        Toast.makeText(MainActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.getInstance().loadYoutubeURL(MainActivity.this, videoID, null);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(NotifyStageVideoReceived event) {
+
+        Timber.d("onMessageEvent: " + event.url);
+
+        if (event.url != null && mVideoPlayer != null) {
+            mVideoPlayer.release();
+            mVideoPlayer.setMediaItem(event.url);
+            mVideoPlayer.prepare(false);
+            mVideoPlayer.showPopUp = false;
+            mVideoPlayer.bringToFront();
+
+        }
     }
 }

@@ -13,7 +13,8 @@
         android:clickable="false"
         android:cropToPadding="true"
         android:focusable="false"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/video_desc"
@@ -26,7 +27,8 @@
         android:text="video desc"
         android:textColor="@color/white"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@color/black_transparent"/>
 
     <View
         android:layout_width="3dp"

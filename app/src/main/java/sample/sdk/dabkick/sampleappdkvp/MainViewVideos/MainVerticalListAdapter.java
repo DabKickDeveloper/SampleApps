@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import it.sephiroth.android.library.widget.AdapterView;
 import it.sephiroth.android.library.widget.HListView;
 import sample.sdk.dabkick.sampleappdkvp.CategoryViewForVideos.VideosOfCategory;
+import sample.sdk.dabkick.sampleappdkvp.MainActivity;
 import sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity;
 import sample.sdk.dabkick.sampleappdkvp.R;
 import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
@@ -80,7 +81,7 @@ public class MainVerticalListAdapter extends BaseAdapter {
         });
 
         HListView listView = rowView.findViewById(R.id.videos_list);
-        final List<VideoItemDetail> videoItemDetails  = Util.getInstance().videosForPlaylists.get(categoryId).subList(0,4);
+        final List<VideoItemDetail> videoItemDetails  = Util.getInstance().videosForPlaylists.get(categoryId);
 
         HorizontalListAdapter adapter = new HorizontalListAdapter(mActivity, videoItemDetails);
         listView.setAdapter(adapter);
@@ -89,11 +90,20 @@ public class MainVerticalListAdapter extends BaseAdapter {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 
-                Intent intent = new Intent(mActivity, PlayerActivity.class);
-                VideoItemDetail videoItemDetail = Util.getInstance().videosForPlaylists.get(categoryId).get(pos);
+               /* Intent intent = new Intent(mActivity, PlayerActivity.class);
+
 
                 PlayerActivity.detail = videoItemDetail;
-                mActivity.startActivity(intent);
+                mActivity.startActivity(intent);*/
+                if(((MainActivity)mActivity).mVideoPlayer.isPlaying())
+                    ((MainActivity)mActivity).mVideoPlayer.pause();
+
+                ((MainActivity)mActivity).mVideoPlayer.release();
+
+                VideoItemDetail videoItemDetail = Util.getInstance().videosForPlaylists.get(categoryId).get(pos);
+                ((MainActivity)mActivity ).play(videoItemDetail.getId());
+
+
             }
         });
 
