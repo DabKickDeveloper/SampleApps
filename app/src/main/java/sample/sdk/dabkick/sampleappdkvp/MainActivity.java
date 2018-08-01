@@ -20,6 +20,7 @@ import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,6 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import sample.sdk.dabkick.sampleappdkvp.MainViewVideos.MainVerticalListAdapter;
 import sample.sdk.dabkick.sampleappdkvp.PlayListModels.PlayListModel;
+import sample.sdk.dabkick.sampleappdkvp.PlayListModels.Playlist;
 import sample.sdk.dabkick.sampleappdkvp.PlayVideos.PlayerActivity;
 import sample.sdk.dabkick.sampleappdkvp.RetrofitInterface.VideoDetailsInterface;
 import sample.sdk.dabkick.sampleappdkvp.Slideshow.ImageModel;
@@ -91,17 +93,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (response.body() != null && response.isSuccessful()) {
                     Util.APP_NAME = response.body().getAppName();
                     Util util = Util.getInstance();
-                    util.playLists = response.body().getPlaylists();
+                    List<Playlist> playlists =  response.body().getPlaylists();
+                    util.playLists = playlists;
                     util.backgroundImageUrlString = response.body().getBackgroundImageUrl();
                     util.backgroundColorHexString = response.body().getBackgroundColorHex();
                     util.primaryColorHexString = response.body().getPrimaryColorHex();
                     util.appTitleString = response.body().getAppTitle();
                     for (int i = 0; i < response.body().getPlaylists().size(); i++) {
                         util.videosForPlaylists.put(response.body().getPlaylists().get(i).getPlaylistId(), response.body().getPlaylists().get(i).getVideos());
-                        // TODO: duration and url of the VideoItemDetails are not yet set
                     }
                     //Setting the adapter with new data
                     categoriesList.setAdapter(adapter);
+
+                    String defaultVideoId = response.body().getDefaultVideoId();
+                    if (defaultVideoId != null && !defaultVideoId.equals("")) {
+                        playDefaultVideo(defaultVideoId);
+                    }
+                    else if (playlists != null && playlists.size() > 0) {
+                        // If there is a video in the playlists, play the first one
+                        Playlist playlist = playlists.get(0);
+                        if (playlist != null) {
+                            List<VideoItemDetail> videos = playlist.getVideos();
+                            if (videos != null && videos.size() > 0) {
+                                VideoItemDetail videoItemDetail = videos.get(0);
+                                if (videoItemDetail != null) {
+                                    playDefaultVideo(videoItemDetail.getId());
+                                }
+                            }
+                        }
+                    }
+
                 } else {
                     Toast.makeText(getApplicationContext(), getResources().getString(R.string.server_error), Toast.LENGTH_LONG).show();
                 }
@@ -258,5 +279,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         mDrawerLayout.closeDrawers();
+    }
+
+    private void playDefaultVideo(String defaultVideoId) {
+        // TODO: Play video with default video ID
     }
 }

@@ -10,21 +10,30 @@ public class PlayListModel {
     @SerializedName("appName")
     @Expose
     private String appName;
+
     @SerializedName("playlists")
     @Expose
     private List<Playlist> playlists = null;
+
     @SerializedName("backgroundImageUrl")
     @Expose
     private String backgroundImageUrl;
+
     @SerializedName("backgroundColorHex")
     @Expose
     private String backgroundColorHex;
+
     @SerializedName("primaryColorHex")
     @Expose
     private String primaryColorHex;
+
     @SerializedName("appTitle")
     @Expose
     private String appTitle;
+
+    @SerializedName("defaultVideoId")
+    @Expose
+    private String defaultVideoId;
 
     public String getAppName() {
         return appName;
@@ -74,4 +83,11 @@ public class PlayListModel {
         this.appTitle = appTitle;
     }
 
+    public String getDefaultVideoId() {
+        return defaultVideoId;
+    }
+
+    public void setDefaultVideoId(String defaultVideoId) {
+        this.defaultVideoId = defaultVideoId;
+    }
 }
