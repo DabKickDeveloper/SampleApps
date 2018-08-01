@@ -30,6 +30,7 @@ import sample.sdk.dabkick.sampleappdkvp.PlayListModels.Video;
 public class MainVerticalListAdapter extends BaseAdapter {
 
     Context mActivity;
+    private HListView previouslySelectedListView = null;
 
     public MainVerticalListAdapter(Context mActivity){
 
@@ -52,7 +53,7 @@ public class MainVerticalListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final View rowView;
 
         if (convertView == null) {
@@ -80,7 +81,7 @@ public class MainVerticalListAdapter extends BaseAdapter {
             }
         });
 
-        HListView listView = rowView.findViewById(R.id.videos_list);
+        final HListView listView = rowView.findViewById(R.id.videos_list);
         final List<VideoItemDetail> videoItemDetails  = Util.getInstance().videosForPlaylists.get(categoryId);
 
         HorizontalListAdapter adapter = new HorizontalListAdapter(mActivity, videoItemDetails);
@@ -89,6 +90,12 @@ public class MainVerticalListAdapter extends BaseAdapter {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+
+                if (MainVerticalListAdapter.this.previouslySelectedListView != null && MainVerticalListAdapter.this.previouslySelectedListView != listView) {
+                    MainVerticalListAdapter.this.previouslySelectedListView.clearChoices();
+                    MainVerticalListAdapter.this.previouslySelectedListView.requestLayout();
+                }
+                MainVerticalListAdapter.this.previouslySelectedListView = listView;
 
                /* Intent intent = new Intent(mActivity, PlayerActivity.class);
 
