@@ -32,14 +32,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity android:name=".CategoryViewForVideos.VideosOfCategory" />
-        <activity
-            android:name=".PlayVideos.PlayerActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|screenSize"
-            android:excludeFromRecents="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -48,6 +40,15 @@
 
                 <data android:scheme="DK29515a9bdf6e11e7a1d8062" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".CategoryViewForVideos.VideosOfCategory" />
+        <activity
+            android:name=".PlayVideos.PlayerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|screenSize"
+            android:excludeFromRecents="true">
+
 
         </activity>
     </application>

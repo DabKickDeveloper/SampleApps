@@ -65,12 +65,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView categoriesList;
     DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
     public DkVideoView mVideoPlayer;
+    boolean isFromShareIntent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        if(getIntent().getData() != null)
+            isFromShareIntent = true;
 
         imageModelArrayList = new ArrayList<>();
         imageModelArrayList = populateList();
@@ -116,19 +120,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     //Setting the adapter with new data
                     categoriesList.setAdapter(adapter);
 
-                    String defaultVideoId = response.body().getDefaultVideoId();
-                    if (defaultVideoId != null && !defaultVideoId.equals("")) {
-                        play(defaultVideoId);
-                    }
-                    else if (playlists != null && playlists.size() > 0) {
-                        // If there is a video in the playlists, play the first one
-                        Playlist playlist = playlists.get(0);
-                        if (playlist != null) {
-                            List<VideoItemDetail> videos = playlist.getVideos();
-                            if (videos != null && videos.size() > 0) {
-                                VideoItemDetail videoItemDetail = videos.get(0);
-                                if (videoItemDetail != null) {
-                                    play(videoItemDetail.getId());
+                    if(!isFromShareIntent) {
+                        String defaultVideoId = response.body().getDefaultVideoId();
+                        if (defaultVideoId != null && !defaultVideoId.equals("")) {
+                            play(defaultVideoId);
+                        } else if (playlists != null && playlists.size() > 0) {
+                            // If there is a video in the playlists, play the first one
+                            Playlist playlist = playlists.get(0);
+                            if (playlist != null) {
+                                List<VideoItemDetail> videos = playlist.getVideos();
+                                if (videos != null && videos.size() > 0) {
+                                    VideoItemDetail videoItemDetail = videos.get(0);
+                                    if (videoItemDetail != null) {
+                                        play(videoItemDetail.getId());
+                                    }
                                 }
                             }
                         }
@@ -271,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
         categoriesList.bringToFront();
+        mVideoPlayer.bringToFront();
 
     }
 
