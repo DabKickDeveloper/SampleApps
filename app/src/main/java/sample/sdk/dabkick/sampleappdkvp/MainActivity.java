@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     Util.APP_NAME = response.body().getAppName();
                     Util util = Util.getInstance();
                     List<Playlist> playlists =  response.body().getPlaylists();
+                    // Override the video ID of the first video to the ID of the green-screen video
+                    playlists.get(0).getVideos().get(0).setId("5mHeNHUSY64");
                     util.playLists = playlists;
                     util.backgroundImageUrlString = response.body().getBackgroundImageUrl();
                     util.backgroundColorHexString = response.body().getBackgroundColorHex();
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                     if(!isFromShareIntent) {
                         String defaultVideoId = response.body().getDefaultVideoId();
-                        if (defaultVideoId != null && !defaultVideoId.equals("")) {
+                        if (false && /* Always play from the first video, which is the green-screen video */ defaultVideoId != null && !defaultVideoId.equals("")) {
                             play(defaultVideoId);
                         } else if (playlists != null && playlists.size() > 0) {
                             // If there is a video in the playlists, play the first one
