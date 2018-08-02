@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/thumbnail"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="231.111dp"
+        android:layout_height="180dp"
         android:layout_marginLeft="5dp"
         android:adjustViewBounds="true"
         android:background="@color/black_transparent"
@@ -18,15 +18,16 @@
 
     <TextView
         android:id="@+id/video_desc"
-        android:layout_width="90dp"
-        android:layout_height="110dp"
-        android:layout_centerInParent="true"
+        android:layout_width="231.111dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/thumbnail"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="4"
         android:text="video desc"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         android:background="@color/black_transparent"/>
 

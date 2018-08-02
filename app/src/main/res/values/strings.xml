@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">SampleAppDKVP</string>
+    <string name="app_name">DKVP Sample App</string>
+    <string name="app_name_watch_together">Watch Together</string>
     <string name="category">Category</string>
     <string name="more">See more</string>
     <string name="key">Name</string>

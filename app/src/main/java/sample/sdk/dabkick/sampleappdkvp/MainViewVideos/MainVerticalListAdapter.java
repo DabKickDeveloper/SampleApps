@@ -116,4 +116,16 @@ public class MainVerticalListAdapter extends BaseAdapter {
 
         return rowView;
     }
+
+    public void unhightSelectedVideo() {
+        if (MainVerticalListAdapter.this.previouslySelectedListView != null) {
+            MainVerticalListAdapter.this.previouslySelectedListView.clearChoices();
+            MainVerticalListAdapter.this.previouslySelectedListView.requestLayout();
+        }
+        MainVerticalListAdapter.this.previouslySelectedListView = null;
+    }
+
+    public void highlightVideo(String videoId) {
+
+    }
 }

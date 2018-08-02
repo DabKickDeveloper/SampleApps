@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //
+        this.setTitle("");
+
         setContentView(R.layout.activity_main);
 
         if(getIntent().getData() != null)
@@ -114,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     util.backgroundColorHexString = response.body().getBackgroundColorHex();
                     util.primaryColorHexString = response.body().getPrimaryColorHex();
                     util.appTitleString = response.body().getAppTitle();
+
+//                    MainActivity.this.setTitle(getString(R.string.app_name_watch_together) + " - " + util.appTitleString);
+                    MainActivity.this.setTitle(util.appTitleString);
+
                     for (int i = 0; i < response.body().getPlaylists().size(); i++) {
                         util.videosForPlaylists.put(response.body().getPlaylists().get(i).getPlaylistId(), response.body().getPlaylists().get(i).getVideos());
                     }
@@ -349,7 +356,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mVideoPlayer.prepare(false);
             mVideoPlayer.showPopUp = false;
             mVideoPlayer.bringToFront();
-
+            ((MainVerticalListAdapter)categoriesList.getAdapter()).unhightSelectedVideo();
+//            ((MainVerticalListAdapter)categoriesList.getAdapter()).highlightVideo(event.);
         }
     }
 }

@@ -76,7 +76,7 @@ public class PlayListModel {
     }
 
     public String getAppTitle() {
-        return primaryColorHex;
+        return appTitle;
     }
 
     public void setAppTitle(String appTitle) {
