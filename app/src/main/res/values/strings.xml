@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">DKVP Sample App</string>
+    <string name="app_name">Watch Firework Together</string>
     <string name="app_name_watch_together">Watch Together</string>
     <string name="category">Category</string>
     <string name="more">See more</string>
     <string name="key">Name</string>
-    <string name="developer_id">DK29515a9bdf6e11e7a1d8062</string>
-    <string name="developer_key">8cfa0c6f6cdc4133a8997013bb4b61</string>
+    <string name="developer_id">DKa76e0fd8969e11e888f006a</string>
+    <string name="developer_key">d4a2ab67e5e323a2f8b29a8500d09a</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="server_error">Network error, please try later</string>
