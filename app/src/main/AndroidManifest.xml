@@ -41,7 +41,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="DK29515a9bdf6e11e7a1d8062" />
+                <data android:scheme="string/developer_id" />
             </intent-filter>
 
         </activity>
