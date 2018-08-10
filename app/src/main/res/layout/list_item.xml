@@ -38,7 +38,6 @@
         android:layout_height="150dp"
         android:layout_below="@+id/category"
         android:layout_marginTop="10dp"
-        android:listSelector="@color/red"
         android:outlineAmbientShadowColor="#F00"
         app:hlv_overScrollFooter="#F00"
         app:hlv_overScrollHeader="#F00">

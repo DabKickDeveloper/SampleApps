@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,8 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.dabkick.dkvideoplayer.livesession.videoplayer.DkPlayEvents;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
-import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
+import com.dabkick.dkvideoplayer.publicsettings.DabKickRegistration;
 import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -45,7 +47,7 @@ import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             R.drawable.dabkick6, R.drawable.dabkick8};
 
     ListView categoriesList;
-    DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
+    DabKickRegistration dabkickRegistration = DabKickRegistration.newInstance();
     public DkVideoView mVideoPlayer;
     boolean isFromShareIntent = false;
 
@@ -158,6 +160,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
 
         mDrawerList.setOnItemClickListener(this);
+        mVideoPlayer.addPlayerUIListener(new MyListener());
+
     }
 
     private ArrayList<ImageModel> populateList() {
@@ -354,10 +358,58 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mVideoPlayer.release();
             mVideoPlayer.setMediaItem(event.url);
             mVideoPlayer.prepare(false);
-            mVideoPlayer.showPopUp = false;
             mVideoPlayer.bringToFront();
             ((MainVerticalListAdapter)categoriesList.getAdapter()).unhightSelectedVideo();
 //            ((MainVerticalListAdapter)categoriesList.getAdapter()).highlightVideo(event.);
         }
     }
+
+    private class MyListener implements DkVideoView.PlayerUIListener{
+
+        @Override
+        public void OnUIPlay() {
+
+        }
+
+        @Override
+        public void OnUIPause() {
+
+        }
+
+        @Override
+        public void OnUIFullScreen() {
+
+        }
+
+        @Override
+        public void OnUIReplay() {
+
+        }
+
+        @Override
+        public void OnUISeek(long l) {
+
+        }
+
+        @Override
+        public void OnUiTouch(boolean b) {
+
+        }
+
+        @Override
+        public void OnUiNext() {
+
+        }
+
+        @Override
+        public void OnUiPrevious() {
+
+        }
+
+        @Override
+        public void onUISeekCompleted() {
+
+        }
+    }
+
 }
