@@ -1,6 +1,6 @@
 package sample.sdk.dabkick.sampleappdkvp;
 
-import com.dabkick.dkvideoplayer.publicsettings.SdkApp;
+import com.dabkick.dkvideoplayer.publicsettings.DKVPApp;
 
-public class PartnerApplication extends SdkApp {
+public class PartnerApplication extends DKVPApp {
 }
