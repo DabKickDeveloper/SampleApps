@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
-import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
+import com.dabkick.dkvideoplayer.publicsettings.DabKickRegistration;
 import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,7 +37,7 @@ public class PlayerActivity extends AppCompatActivity {
     ListView recommended;
     DkVideoView mVideoPlayer;
     public static boolean isRegistered = false, onConfigurationChanged = false;
-    DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
+    DabKickRegistration dabkickRegistration = DabKickRegistration.newInstance();
     ArrayList<VideoItemDetail> videos;
 
     @Override
