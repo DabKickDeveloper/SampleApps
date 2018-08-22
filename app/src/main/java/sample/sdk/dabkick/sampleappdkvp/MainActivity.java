@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,7 +48,7 @@ import sample.sdk.dabkick.sampleappdkvp.Utils.Util;
 import sample.sdk.dabkick.sampleappdkvp.VideoDetails.VideoItemDetail;
 import timber.log.Timber;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private static ViewPager mPager;
     private static int currentPage = 0;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         setContentView(R.layout.activity_main);
 
-        if(getIntent().getData() != null)
+        if (getIntent().getData() != null)
             isFromShareIntent = true;
 
         imageModelArrayList = new ArrayList<>();
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (response.body() != null && response.isSuccessful()) {
                     Util.APP_NAME = response.body().getAppName();
                     Util util = Util.getInstance();
-                    List<Playlist> playlists =  response.body().getPlaylists();
+                    List<Playlist> playlists = response.body().getPlaylists();
                     util.playLists = playlists;
                     util.backgroundImageUrlString = response.body().getBackgroundImageUrl();
                     util.backgroundColorHexString = response.body().getBackgroundColorHex();
@@ -129,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     //Setting the adapter with new data
                     categoriesList.setAdapter(adapter);
 
-                    if(!isFromShareIntent) {
+                    if (!isFromShareIntent) {
                         String defaultVideoId = response.body().getDefaultVideoId();
                         if (defaultVideoId != null && !defaultVideoId.equals("")) {
                             play(defaultVideoId);
@@ -162,6 +163,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerList.setOnItemClickListener(this);
         mVideoPlayer.addPlayerUIListener(new MyListener());
 
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        boolean handled = super.dispatchTouchEvent(ev);
+        if (mVideoPlayer != null && mVideoPlayer.gestureScanner != null)
+            handled = mVideoPlayer.gestureScanner.onTouchEvent(ev);
+        return handled;
     }
 
     private ArrayList<ImageModel> populateList() {
@@ -312,25 +321,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void play(String defaultVideoId) {
 
-            String videoID = defaultVideoId;
+        String videoID = defaultVideoId;
 
-            sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.getInstance().setOnFinishedDownload(new sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.OnFinishedDownloadListener() {
-                @Override
-                public void onFinishedDownload(String fullStreamURL, boolean success) {
-                    if (success) {
+        sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.getInstance().setOnFinishedDownload(new sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.OnFinishedDownloadListener() {
+            @Override
+            public void onFinishedDownload(String fullStreamURL, boolean success) {
+                if (success) {
 
-                        mVideoPlayer.setMediaItem(fullStreamURL);
-                        mVideoPlayer.prepare(true);
-                        mVideoPlayer.bringToFront();
+                    mVideoPlayer.setMediaItem(fullStreamURL);
+                    mVideoPlayer.prepare(true);
+                    mVideoPlayer.bringToFront();
 
-                    } else {
+                } else {
 
-                        Toast.makeText(MainActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(MainActivity.this, "Unable to play video", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
 
-            sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.getInstance().loadYoutubeURL(MainActivity.this, videoID, null);
+        sample.sdk.dabkick.sampleappdkvp.PlayVideos.LoadYoutubeVideos.getInstance().loadYoutubeURL(MainActivity.this, videoID, null);
     }
 
     @Override
@@ -359,12 +368,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mVideoPlayer.setMediaItem(event.url);
             mVideoPlayer.prepare(false);
             mVideoPlayer.bringToFront();
-            ((MainVerticalListAdapter)categoriesList.getAdapter()).unhightSelectedVideo();
+            ((MainVerticalListAdapter) categoriesList.getAdapter()).unhightSelectedVideo();
 //            ((MainVerticalListAdapter)categoriesList.getAdapter()).highlightVideo(event.);
         }
     }
 
-    private class MyListener implements DkVideoView.PlayerUIListener{
+    private class MyListener implements DkVideoView.PlayerUIListener {
 
         @Override
         public void OnUIPlay() {
