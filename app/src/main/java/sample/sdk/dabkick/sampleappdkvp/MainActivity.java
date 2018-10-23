@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
 import com.dabkick.dkvideoplayer.publicsettings.DabKickRegistration;
 import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
+
 import com.viewpagerindicator.CirclePageIndicator;
 
 import org.greenrobot.eventbus.EventBus;

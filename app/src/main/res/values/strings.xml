@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Watch Bounce TV Together</string>
+    <string name="app_name">Watch Academy of Art Demo Together</string>
     <string name="app_name_watch_together">Watch Together</string>
     <string name="category">Category</string>
     <string name="more">See more</string>
     <string name="key">Name</string>
-    <string name="developer_id">DK88585752969e11e888f006a</string>
-    <string name="developer_key">01c8a03fac87a1372e7b13ab3f8a25</string>
+    <string name="developer_id">DK8bd9d8cce22011e7a1d8062</string>
+    <string name="developer_key">13308add08a0ea09cf3e419f4b70b4</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="server_error">Network error, please try later</string>
