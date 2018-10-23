@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView;
-import com.dabkick.dkvideoplayer.publicsettings.DabkickRegistration;
+import com.dabkick.dkvideoplayer.publicsettings.DabKickRegistration;
 import com.dabkick.dkvideoplayer.publicsettings.NotifyStageVideoReceived;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             R.drawable.dabkick6, R.drawable.dabkick8};
 
     ListView categoriesList;
-    DabkickRegistration dabkickRegistration = DabkickRegistration.newInstance();
+    DabKickRegistration dabkickRegistration = DabKickRegistration.newInstance();
     public DkVideoView mVideoPlayer;
     boolean isFromShareIntent = false;
 
