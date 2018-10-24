@@ -3,26 +3,23 @@ package sample.sdk.dabkick.sampleappdkvp;
 import android.app.Activity;
 import android.util.SparseArray;
 
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YtFile;
-
 /**
  * Created by iFocus on 13-06-2018.
  */
 
 public class LoadYoutubeVideos {
 
-    private static LoadYoutubeVideos instance;
-    OnFinishedDownloadListener mFinishedDownloadListener = null;
+ /*   private static LoadYoutubeVideos instance;
+    static OnFinishedDownloadListener mFinishedDownloadListener = null;
 
-    public static LoadYoutubeVideos getInstance(){
+    public static LoadYoutubeVideos getInstance() {
 
         if (instance == null)
             instance = new LoadYoutubeVideos();
         return instance;
     }
 
-    public LoadYoutubeVideos(){
+    public LoadYoutubeVideos() {
 
     }
 
@@ -35,7 +32,7 @@ public class LoadYoutubeVideos {
         void onFinishedDownload(String fullStreamURL, boolean success);
     }
 
-    public void loadYoutubeURL(Activity mActivity, String videoID){
+    public static void loadYoutubeURL(Activity mActivity, String videoID) {
 
         String url = "https://www.youtube.com/watch?v=" + videoID + "&list=FLEYfH4kbq85W_CiOTuSjf8w&feature=mh_lolz";
 
@@ -51,19 +48,19 @@ public class LoadYoutubeVideos {
                         } else {
                             downloadUrl = ytFiles.get(itag).getUrl();
                         }
-                        if(mFinishedDownloadListener != null){
+                        if (mFinishedDownloadListener != null) {
                             mFinishedDownloadListener.onFinishedDownload(downloadUrl, true);
                             mFinishedDownloadListener = null;
                         }
 
                     } catch (Exception e) {
-                        if(mFinishedDownloadListener != null){
+                        if (mFinishedDownloadListener != null) {
                             mFinishedDownloadListener.onFinishedDownload(null, false);
                             mFinishedDownloadListener = null;
                         }
                     }
                 } else {
-                    if(mFinishedDownloadListener != null){
+                    if (mFinishedDownloadListener != null) {
                         mFinishedDownloadListener.onFinishedDownload(null, false);
                         mFinishedDownloadListener = null;
                     }
@@ -72,5 +69,5 @@ public class LoadYoutubeVideos {
             }
         }.extract(url, true, true);
 
-    }
+    }*/
 }

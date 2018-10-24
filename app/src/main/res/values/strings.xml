@@ -1,12 +1,7 @@
 <resources>
-    <string name="app_name">DKVP Sample App</string>
-    <string name="app_name_watch_together">Watch Together</string>
-    <string name="category">Category</string>
-    <string name="more">See more</string>
-    <string name="key">Name</string>
-    <string name="developer_id">DK29515a9bdf6e11e7a1d8062</string>
-    <string name="developer_key">8cfa0c6f6cdc4133a8997013bb4b61</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
-    <string name="server_error">Network error, please try later</string>
+    <string name="app_name">EngineDemoApp</string>
+    <string name="developer_id">DKe1ac069ddf1011e7a1d8062</string>
+    <string name="developer_key">f84bd8d546b10cff2b601093e47f61</string>
+    <string name="end_session">End Session</string>
+    <string name="invite_friend">Invite Friend</string>
 </resources>
