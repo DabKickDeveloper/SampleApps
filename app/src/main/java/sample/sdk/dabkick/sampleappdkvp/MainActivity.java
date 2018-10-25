@@ -25,6 +25,8 @@ import android.widget.VideoView;
 
 import com.dabkick.engine.Livestream.AddUserImpl;
 import com.dabkick.engine.Public.AddUser;
+import com.dabkick.engine.Public.Authentication;
+import com.dabkick.engine.Public.CallbackListener;
 import com.dabkick.engine.Public.DabKickEngine;
 import com.dabkick.engine.Public.EnginePresenceCallbackListener;
 import com.dabkick.engine.Public.LiveChatCallbackListener;
@@ -32,7 +34,7 @@ import com.dabkick.engine.Public.MessageInfo;
 import com.dabkick.engine.Public.UserInfo;
 import com.dabkick.engineapplication.R;
 import com.dabkick.engineapplication.R;
-import com.google.firebase.auth.UserInfo;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         enginePresenceCallbackListener = new EnginePresenceCallbackListener() {
             @Override
-            public void userEntered(UserInfo participant) {
+            public void userEntered(com.dabkick.engine.Public.UserInfo participant) {
                 AppParticipant appParticipant = new AppParticipant(participant.getAppUserID(), participant.getName(), participant.getProfilePicUrl());
                 mParticipantList.add(appParticipant);
                 mAvatarAdapter.updateAvatarList(mParticipantList);
@@ -150,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
-            public void userExit(UserInfo participant) {
+            public void userExit(com.dabkick.engine.Public.UserInfo participant) {
 //                AppParticipant appParticipant = new AppParticipant(participant.getUserId(), participant.getName(), participant.getProfilePicUrl());
                 for (int i = 0; i < mParticipantList.size(); i++) {
                     if (mParticipantList.get(i).getUserId().equalsIgnoreCase(participant.getAppUserID())) {
@@ -303,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Way of updating User Name
     public void updateName() {
-        UserInfo userInfo = new UserInfo();
+        com.dabkick.engine.Public.UserInfo userInfo = new com.dabkick.engine.Public.UserInfo();
         userInfo.setName("Kesh");
         userInfo.setProfilePicUrl("");
         userInfo.setAppUserID("A12345");
