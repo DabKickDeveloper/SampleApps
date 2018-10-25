@@ -1,12 +1,16 @@
 package sample.sdk.dabkick.sampleappdkvp;
 
 import android.content.Context;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.dabkick.engine.Public.MessageInfo;
+import com.dabkick.engineapplication.R;
 
 import java.util.List;
 
@@ -15,13 +19,13 @@ import sample.sdk.dabkick.sampleappdkvp.ChatMsg;
 public class ChatMsgAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private List<ChatMsg> mMessageList;
+    private List<MessageInfo> mMessageList;
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
 
 
-    public ChatMsgAdapter(Context mContext, List<ChatMsg> mMessageList) {
+    public ChatMsgAdapter(Context mContext, List<MessageInfo> mMessageList) {
         this.mContext = mContext;
         this.mMessageList = mMessageList;
     }
@@ -44,7 +48,7 @@ public class ChatMsgAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ChatMsg message = (ChatMsg) mMessageList.get(position);
+        MessageInfo message = (MessageInfo) mMessageList.get(position);
 
         switch (holder.getItemViewType()) {
             case VIEW_TYPE_MESSAGE_SENT:
@@ -62,7 +66,7 @@ public class ChatMsgAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        ChatMsg message = (ChatMsg) mMessageList.get(position);
+        MessageInfo message = (MessageInfo) mMessageList.get(position);
 
         if (message.getChatMsgType() == ChatMsg.MESSAGE_TYPE.SENT) {
             return VIEW_TYPE_MESSAGE_SENT;
@@ -81,9 +85,9 @@ public class ChatMsgAdapter extends RecyclerView.Adapter {
             nameText = (TextView) itemView.findViewById(R.id.sender_msg_name);
         }
 
-        void bind(ChatMsg message) {
-            messageText.setText(message.getChatMsg());
-            nameText.setText(message.getChatMsgUserName());
+        void bind(MessageInfo message) {
+            messageText.setText(message.getChatMessage());
+            nameText.setText(message.getUserName());
         }
     }
 
@@ -97,13 +101,13 @@ public class ChatMsgAdapter extends RecyclerView.Adapter {
             nameText = (TextView) itemView.findViewById(R.id.recieved_msg_name);
         }
 
-        void bind(ChatMsg message) {
-            messageText.setText(message.getChatMsg());
-            nameText.setText(message.getChatMsgUserName());
+        void bind(MessageInfo message) {
+            messageText.setText(message.getChatMessage());
+            nameText.setText(message.getUserName());
         }
     }
 
-    public void updateMessageList(List<ChatMsg> msgList){
+    public void updateMessageList(List<MessageInfo> msgList){
         this.mMessageList = msgList;
         notifyDataSetChanged();
     }
