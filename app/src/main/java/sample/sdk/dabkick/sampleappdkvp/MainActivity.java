@@ -21,36 +21,39 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
-import com.dabkick.engine.DKServer.Retrofit.Prefs;
-import com.dabkick.engine.Firebase.Common.AbstractDatabaseReferences;
-import com.dabkick.engine.Firebase.Models.Participant;
-import com.dabkick.engine.Livestream.AddUserImpl;
 import com.dabkick.engine.Public.AddUser;
-import com.dabkick.engine.Public.Authentication;
-import com.dabkick.engine.Public.CallbackListener;
 import com.dabkick.engine.Public.DabKickEngine;
-import com.dabkick.engine.Public.EnginePresenceCallbackListener;
-import com.dabkick.engine.Public.LiveChatCallbackListener;
-import com.dabkick.engine.Public.UserInfo;
-import com.dabkick.engine.Public.VideoEventListener;
-import com.dabkick.engine.Receiver.CheckChooserReceiver;
-import com.dabkick.engine.Util.Util;
-import com.dabkick.engine.video.DkVideoView;
+import com.dabkick.engineapplication.R;
+import com.google.firebase.auth.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import sample.sdk.dabkick.sampleappdkvp.AppParticipant;
-import sample.sdk.dabkick.sampleappdkvp.AvatarAdapter;
-import sample.sdk.dabkick.sampleappdkvp.ChatMsg;
-import sample.sdk.dabkick.sampleappdkvp.ChatMsgAdapter;
+
+//import com.dabkick.engine.Public.EnginePresenceCallbackListener;
+//import com.dabkick.engine.Public.LiveChatCallbackListener;
+//import com.dabkick.engine.Public.UserInfo;
+//import com.dabkick.engine.Public.VideoEventListener;
+//import com.dabkick.engine.Receiver.CheckChooserReceiver;
+//import com.dabkick.engine.Util.Util;
+//import com.dabkick.engine.video.DkVideoView;
+
+//import com.dabkick.engine.DKServer.Retrofit.Prefs;
+//import com.dabkick.engine.Firebase.Common.AbstractDatabaseReferences;
+//import com.dabkick.engine.Firebase.Models.Participant;
+//import com.dabkick.engine.Livestream.AddUserImpl;
+//import com.dabkick.engine.Public.AddUser;
+//import com.dabkick.engine.Public.Authentication;
+//import com.dabkick.engine.Public.CallbackListener;
 
 //import com.dabkick.dkvideoplayer.Engine.Public.DabKickEngine;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public DkVideoView mVideoPlayer;
+//    public DkVideoView mVideoPlayer;
+    public VideoView mVideoPlayer;
     ImageButton video1, video2, video3, video4, video5;
     private static boolean isRegistered = false, onConfigurationChange = false;
 

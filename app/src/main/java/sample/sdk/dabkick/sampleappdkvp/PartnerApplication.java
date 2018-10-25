@@ -1,8 +1,11 @@
 package sample.sdk.dabkick.sampleappdkvp;
 
 
-import com.dabkick.engine.Public.DKVPApp;
+import android.app.Application;
 
-public class PartnerApplication extends DKVPApp {
-    //to be added
-}
+//import com.dabkick.engine.Public.DKVPApp;
+
+    public class PartnerApplication extends Application {
+
+        //to do
+    }
