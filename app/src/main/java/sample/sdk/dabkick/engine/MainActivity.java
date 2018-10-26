@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     AddUser addUser;
     View meLayout;
     RecyclerView.LayoutManager mLayoutManager;
+    String sessionId;
+    Uri intentURI;
 
     //    EnginePresenceListenerImpl presenterListener;
     EnginePresenceCallbackListener enginePresenceCallbackListener;
@@ -71,10 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         meLayout = findViewById(R.id.meAvatar);
         TextView meTextView = meLayout.findViewById(R.id.profile_name);
         meTextView.setText("Me");
-
         setUpLayoutManager();
-
-//        listView = findViewById(R.id.listview_chat);
         mAvatarListView = findViewById(R.id.avatar_recycler_view);
     }
 
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enginePresenceCallbackListener = new EnginePresenceCallbackListener() {
             @Override
             public void userEntered(com.dabkick.engine.Public.UserInfo participant) {
-                AppParticipant appParticipant = new AppParticipant(participant.getAppUserID(), participant.getName(), participant.getProfilePicUrl());
+                AppParticipant appParticipant = new AppParticipant(participant.getAppSpecificUserID(), participant.getName(), participant.getProfilePicUrl());
                 mParticipantList.add(appParticipant);
                 mAvatarAdapter.updateAvatarList(mParticipantList);
                 Log.d("TAGGOW", "userEntered: " + participant.getName());
@@ -157,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void userExit(com.dabkick.engine.Public.UserInfo participant) {
 //                AppParticipant appParticipant = new AppParticipant(participant.getUserId(), participant.getName(), participant.getProfilePicUrl());
                 for (int i = 0; i < mParticipantList.size(); i++) {
-                    if (mParticipantList.get(i).getUserId().equalsIgnoreCase(participant.getAppUserID())) {
+                    if (mParticipantList.get(i).getUserId().equalsIgnoreCase(participant.getAppSpecificUserID())) {
                         mParticipantList.remove(i);
                         mAvatarAdapter.updateAvatarList(mParticipantList);
                         Log.d("TAGGOW", "userExites: " + participant.getName());
@@ -167,20 +166,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         };
 
-        engine = new DabKickEngine(MainActivity.this, auth, new CallbackListener() {
+        enterSession(getIntent());
+
+        engine = new DabKickEngine(MainActivity.this, auth, sessionId, intentURI,
+                messageDisplayListener, enginePresenceCallbackListener, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
                 setUpChatAdapter();
+
             }
 
             @Override
             public void onError(String msg, Object... obj) {
-
+                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
             }
-        }, messageDisplayListener, enginePresenceCallbackListener);
-        initViews();
+        });
 
-//        mAvatarAdapter.updateAvatarList(prepareAvatarList());
+        initViews();
 
         isRegistered = true;
 
@@ -194,8 +196,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 engine.onClickInvite();
             }
         });
-
-        enterSession(getIntent());
 
         updateName();
 
@@ -234,7 +234,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onResume();
         if (!isRegistered) {
             Authentication auth = new Authentication("DKe1ac069ddf1011e7a1d8062", "f84bd8d546b10cff2b601093e47f61");
-            engine = new DabKickEngine(MainActivity.this, auth, new CallbackListener() {
+            engine = new DabKickEngine(MainActivity.this, auth, sessionId, intentURI,
+                    messageDisplayListener, enginePresenceCallbackListener, new CallbackListener() {
                 @Override
                 public void onSuccess(String msg, Object... obj) {
                     setUpChatAdapter();
@@ -243,9 +244,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onError(String msg, Object... obj) {
-
+                    Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
                 }
-            }, messageDisplayListener, enginePresenceCallbackListener);
+            });
         }
     }
 
@@ -313,7 +314,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         com.dabkick.engine.Public.UserInfo userInfo = new com.dabkick.engine.Public.UserInfo();
         userInfo.setName("Kesh");
         userInfo.setProfilePicUrl("");
-        userInfo.setAppUserID("A12345");
+        userInfo.setAppSpecificUserID("A12345");
         addUser = new AddUserImpl();
         addUser.addUser(userInfo, new CallbackListener() {
             @Override
@@ -341,10 +342,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void enterSession(Intent intent) {
-        Uri intentUri = intent.getData();
-        if (intentUri != null) {
-            String sessionId = getIntent().getExtras().getString("sessionId");
-            engine.setSessionId(sessionId);
+        intentURI = intent.getData();
+        if (intentURI != null) {
+            sessionId = getIntent().getExtras().getString("sessionId");
         }
     }
 }
