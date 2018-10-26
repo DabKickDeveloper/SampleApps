@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.dabkick.engineapplication"
+        applicationId "com.dabkick.livechatSampleApp"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
@@ -12,13 +12,84 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+    lintOptions {
+        abortOnError false
+    }
+
+    signingConfigs {
+
+//        production {
+//            storeFile rootProject.file('keystore/keystore.jks')
+//            storePassword "simplefun2012"
+//            keyAlias "simplefun2012"
+//            keyPassword "simplefun2012"
+//            v2SigningEnabled false
+//        }
+
+        staging {
+            storeFile rootProject.file('keystore/keystore')
+            storePassword "simplefun2012"
+            keyAlias "simplefun2012"
+            keyPassword "simplefun2012"
+            v2SigningEnabled false
+        }
+
+        release {
+            storeFile rootProject.file('keystore/keystore')
+            storePassword "simplefun2012"
+            keyAlias "simplefun2012"
+            keyPassword "simplefun2012"
+            v2SigningEnabled false
+        }
+
+    }
+
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
 
     buildTypes {
+
         release {
+            applicationIdSuffix ".release"
+            signingConfig signingConfigs.release
+            debuggable true
             minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "STAGING", "false"
         }
+        staging {
+            // STAGING = USES PRODUCTION INFRASTRUCTURE BUT: a) DEBUG enabled b) CRASHLYTICS ARE CAPTURED IN SEPARATE BUCKET
+            applicationIdSuffix ".staging"
+            signingConfig signingConfigs.staging
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "STAGING", "true"
+        }
+//        production {
+//            applicationIdSuffix ".production"
+//            signingConfig signingConfigs.production
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            buildConfigField "boolean", "STAGING", "false"
+//        }
+        debug {
+            buildConfigField "boolean", "STAGING", "false"
+        }
+//        // mirror production, for use with developers
+//        productionForDevelopment {
+//            initWith production
+//            debuggable true
+////            buildConfigField "boolean", "disableCrashlytics", "true"
+//        }
+
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
