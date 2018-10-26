@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.engine;
+package sample.sdk.dabkick.livechat;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

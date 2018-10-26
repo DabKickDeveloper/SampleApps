@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.engine;
+package sample.sdk.dabkick.livechat;
 
 
 import com.dabkick.engine.Public.DKVPApp;

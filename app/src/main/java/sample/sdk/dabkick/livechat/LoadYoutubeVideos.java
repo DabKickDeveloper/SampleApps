@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.engine;
+package sample.sdk.dabkick.livechat;
 
 /**
  * Created by iFocus on 13-06-2018.

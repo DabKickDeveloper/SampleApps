@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.engine;
+package sample.sdk.dabkick.livechat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +27,6 @@ import com.dabkick.engine.Public.DabKickEngine;
 import com.dabkick.engine.Public.EnginePresenceCallbackListener;
 import com.dabkick.engine.Public.LiveChatCallbackListener;
 import com.dabkick.engine.Public.MessageInfo;
-import com.dabkick.engineapplication.R;
-
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.engine;
+package sample.sdk.dabkick.livechat;
 
 public class AppParticipant {
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="sample.sdk.dabkick.engine.MainActivity">
+    tools:context="sample.sdk.dabkick.livechat.MainActivity">
 
     <include
         android:id="@+id/tool_bar"
