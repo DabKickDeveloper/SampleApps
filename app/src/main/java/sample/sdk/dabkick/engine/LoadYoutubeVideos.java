@@ -1,7 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp;
-
-import android.app.Activity;
-import android.util.SparseArray;
+package sample.sdk.dabkick.engine;
 
 /**
  * Created by iFocus on 13-06-2018.

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="sample.sdk.dabkick.sampleappdkvp.MainActivity">
+    tools:context="sample.sdk.dabkick.engine.MainActivity">
 
     <include
         android:id="@+id/tool_bar"
@@ -105,97 +105,6 @@
             android:layout_height="match_parent"
             android:divider="@null"
             android:transcriptMode="alwaysScroll" />
-
-    </LinearLayout>
-
-
-    <com.dabkick.engine.video.VideoView
-        android:id="@+id/video_view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/tool_bar"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/btn_layout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/video_view"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/video1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#FFF"
-            android:src="@drawable/image1"
-            android:text="video 1" />
-
-        <ImageButton
-            android:id="@+id/video2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:src="@drawable/image2"
-            android:text="video 2"
-            android:visibility="visible" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btn_layout_2"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/btn_layout"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/video3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#FFF"
-            android:src="@drawable/image3"
-            android:text="video 3" />
-
-        <ImageButton
-            android:id="@+id/video4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:src="@drawable/image4"
-            android:text="video 4"
-            android:visibility="visible" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/btn_layout_3"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/btn_layout_2"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/video5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="#FFF"
-            android:src="@drawable/image5"
-            android:text="video 5" />
 
     </LinearLayout>
 

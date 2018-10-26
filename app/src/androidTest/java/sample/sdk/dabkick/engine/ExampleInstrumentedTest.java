@@ -1,4 +1,4 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.engine;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

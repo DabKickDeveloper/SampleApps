@@ -1,7 +1,6 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.engine;
 
 import android.content.Context;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +12,6 @@ import com.dabkick.engine.Public.MessageInfo;
 import com.dabkick.engineapplication.R;
 
 import java.util.List;
-
-import sample.sdk.dabkick.sampleappdkvp.ChatMsg;
 
 public class ChatMsgAdapter extends RecyclerView.Adapter {
 

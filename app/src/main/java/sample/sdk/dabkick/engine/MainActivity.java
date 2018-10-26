@@ -1,10 +1,8 @@
-package sample.sdk.dabkick.sampleappdkvp;
+package sample.sdk.dabkick.engine;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -20,8 +18,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.dabkick.engine.Livestream.AddUserImpl;
 import com.dabkick.engine.Public.AddUser;
@@ -31,8 +27,6 @@ import com.dabkick.engine.Public.DabKickEngine;
 import com.dabkick.engine.Public.EnginePresenceCallbackListener;
 import com.dabkick.engine.Public.LiveChatCallbackListener;
 import com.dabkick.engine.Public.MessageInfo;
-import com.dabkick.engine.Public.UserInfo;
-import com.dabkick.engineapplication.R;
 import com.dabkick.engineapplication.R;
 
 
@@ -78,8 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TextView meTextView = meLayout.findViewById(R.id.profile_name);
         meTextView.setText("Me");
 
-        setUpChatAdapter();
+        setUpLayoutManager();
+
+//        listView = findViewById(R.id.listview_chat);
         mAvatarListView = findViewById(R.id.avatar_recycler_view);
+    }
+
+    private void setUpLayoutManager() {
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        chatListView.setLayoutManager(mLayoutManager);
+        chatListView.setItemAnimator(new DefaultItemAnimator());
     }
 
     public void setUpChatAdapter() {
@@ -255,6 +257,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        mParticipantList.clear();
+        engine.endSession();
 
         if (onConfigurationChange)
             onConfigurationChange = false;

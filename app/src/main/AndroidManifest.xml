@@ -10,12 +10,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:clearTaskOnLaunch = "true"
-            android:allowTaskReparenting = "true"
+        <activity
+            android:name="sample.sdk.dabkick.engine.MainActivity"
+            android:allowTaskReparenting="true"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize"
             android:launchMode="standard"
-            android:windowSoftInputMode="adjustPan"
-            android:configChanges="orientation|screenSize">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
