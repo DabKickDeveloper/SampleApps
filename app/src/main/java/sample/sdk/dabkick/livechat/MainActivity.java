@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dabkick.engine.DKServer.Retrofit.Prefs;
 import com.dabkick.engine.Livestream.AddUserImpl;
 import com.dabkick.engine.Public.AddUser;
 import com.dabkick.engine.Public.Authentication;
@@ -111,10 +112,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         messageDisplayListener = new LiveChatCallbackListener() {
             @Override
-            public void receivedChatMessage(String senderId, String appUserId, String message, String name) {
+            public void receivedChatMessage(String senderId, String appUserId, MessageInfo message) {
                 MessageInfo chatMsg = new MessageInfo();
-                chatMsg.setChatMessage(message);
-                chatMsg.setUserName(name);
+                chatMsg.setChatMessage(message.getChatMessage());
+                chatMsg.setUserName(message.getUserName());
                 chatMsg.setUserId(senderId);
                 chatMsg.setChatMsgType(MessageInfo.MESSAGE_TYPE.RECEIVED);
                 mChatMessageList.add(chatMsg);
@@ -270,7 +271,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.sendButton) {
             if (!chatEditText.getText().toString().isEmpty()) {
                 if (engine.chatEventListener != null) {
-                    engine.chatEventListener.sendMessage(chatEditText.getText().toString(), new CallbackListener() {
+                    MessageInfo messageInfo = new MessageInfo();
+                    messageInfo.setChatMessage(chatEditText.getText().toString());
+                    messageInfo.setUserName(Prefs.getName());
+                    messageInfo.setUserId(Prefs.getUserId());
+                    engine.chatEventListener.sendMessage(messageInfo, new CallbackListener() {
                         @Override
                         public void onSuccess(String msg, Object... obj) {
                             Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
