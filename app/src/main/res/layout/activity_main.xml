@@ -4,108 +4,45 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/background_img"
     tools:context="sample.sdk.dabkick.livechat.MainActivity">
 
-    <include
-        android:id="@+id/tool_bar"
-        layout="@layout/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp" />
-
     <LinearLayout
-        android:id="@+id/avtar_layout"
+        android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tool_bar"
-        android:orientation="horizontal">
-
-        <include
-            android:id="@+id/meAvatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            layout="@layout/avatar_item"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/avatar_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:visibility="visible" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_invite_friend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/avtar_layout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorAccent"
-        android:padding="10dp"
-        android:text="@string/invite_friend"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
-
-
-    <LinearLayout
-        android:id="@+id/chat_box_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_invite_friend"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/chatEditText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_margin="16dp"
-            android:layout_weight="0.9"
-            android:clickable="true"
-            android:hint="Enter Chat Message"
-            android:textColor="@color/white"
-            android:textColorHint="@color/accent" />
-
-        <ImageButton
-            android:id="@+id/sendButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/send_icon_black_18dp"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/end_session"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorAccent"
-        android:layout_marginBottom="15dp"
-        android:text="@string/end_session"
-        android:textAllCaps="false"
-        android:textColor="@color/white" />
-
-    <LinearLayout
-        android:id="@+id/chat_list_view_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_box_container"
-        android:layout_above="@+id/end_session"
-        android:layout_margin="16dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/listview_chat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@null"
-            android:transcriptMode="alwaysScroll" />
+        <TextView
+            android:id="@+id/title_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Dabkick Sync-Engine"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
 
+        <TextView
+            android:id="@+id/title_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Sample App"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/chat_together_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="25dp"
+        android:background="@color/white"
+        android:text="Chat Together" />
+
 
 </RelativeLayout>

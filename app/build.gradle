@@ -114,7 +114,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
-    implementation('com.dabkick.engine:engine:1.0.1') { transitive = true; changing = true }
+    //implementation('com.dabkick.engine:engine:1.0.1') { transitive = true; changing = true }
 
     //including dk player lib
     //implementation project(':engine')

@@ -3,7 +3,6 @@
     package="sample.sdk.dabkick.livechat">
 
     <application
-        android:name="sample.sdk.dabkick.livechat.PartnerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,24 +15,13 @@
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|screenSize"
             android:launchMode="standard"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="DKe1ac069ddf1011e7a1d8062" />
-
-            </intent-filter>
-
         </activity>
     </application>
 
