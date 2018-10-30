@@ -4,4 +4,6 @@
     <string name="developer_key">f84bd8d546b10cff2b601093e47f61</string>
     <string name="end_session">End Session</string>
     <string name="invite_friend">Invite Friend</string>
+    <string name="name_edit_text_hint">Type your name here</string>
+    <string name="done">Done</string>
 </resources>

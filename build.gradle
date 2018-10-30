@@ -25,9 +25,9 @@ allprojects {
             dirs 'libs'
         }
         maven { url 'https://jitpack.io' }
-       /* maven {
+        maven {
             url "http://dabkick.bitnamiapp.com/artifactory/android-dev-engine-local/"
-        }*/
+        }
     }
 }
 
