@@ -1,18 +1,25 @@
 package sample.sdk.dabkick.livechat;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dabkick.engine.Livestream.AddUserImpl;
@@ -31,9 +38,9 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button mInviteBtn, endSession, mChatTogether, mNameDoneBtn;
+    Button watchTogether, endSession, mNameDoneBtn, mInviteBtn;
     EditText chatEditText, mNameEditText;
-    ImageButton sendChatMessage;
+    ImageButton sendChatMessage, mChatTogether;
     RecyclerView chatListView, mAvatarListView;
     LinearLayout mAvatarLayout, mChatBoxContainer, mNameTextLayout;
     RecyclerView.LayoutManager mLayoutManager;
@@ -47,9 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     List<AppParticipant> mParticipantList = new ArrayList<AppParticipant>();
     ChatMsgAdapter mChatMessageAdapter;
     AvatarAdapter mAvatarAdapter;
-    String sessionId;
+    String sessionId, mUserName = "";
     Uri intentURI;
     private static boolean isRegistered = false;
+    RelativeLayout mainLayout;
+    View meLayout;
+
+    LinearLayout mChatListViewContainer;
 
     private void setUpLayoutManager() {
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -60,9 +71,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void initViews() {
         chatEditText = findViewById(R.id.chatEditText);
         sendChatMessage = findViewById(R.id.send_chat_msg);
-        mInviteBtn = findViewById(R.id.btn_invite_friend);
+        watchTogether = findViewById(R.id.btn_invite_friend);
         endSession = findViewById(R.id.end_session);
+        endSession.setOnClickListener(this);
         chatListView = findViewById(R.id.listview_chat);
+        mChatListViewContainer = findViewById(R.id.chat_list_view_container);
         setUpLayoutManager();
         mAvatarListView = findViewById(R.id.avatar_recycler_view);
         mAvatarLayout = findViewById(R.id.avatar_layout);
@@ -75,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mNameDoneBtn.setOnClickListener(MainActivity.this);
         mNameEditText = findViewById(R.id.name_edit_text);
         mChatBoxContainer = findViewById(R.id.chat_box_container);
+        mainLayout = findViewById(R.id.mainLayout);
     }
 
 
@@ -100,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         mChatMessageAdapter.updateMessageList(mChatMessageList);
+                        if (mChatListViewContainer.getVisibility() == View.GONE) {
+                            mChatTogether.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                        }
                     }
                 });
 
@@ -148,30 +165,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 messageDisplayListener, enginePresenceCallbackListener, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
+                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
                 setUpChatAdapter();
 
             }
 
             @Override
             public void onError(String msg, Object... obj) {
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
             }
         });
 
         isRegistered = true;
 
         sendChatMessage.setOnClickListener(this);
-        mInviteBtn.setOnClickListener(this);
+        watchTogether.setOnClickListener(this);
         setUpAvatarAdapter();
 
-        mInviteBtn.setOnClickListener(new View.OnClickListener() {
+        watchTogether.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 engine.onClickInvite();
             }
         });
 
-        updateName();
+        /*updateName();
 
         endSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 engine.endSession();
                 engine.chatEventListener.reset();
             }
-        });
+        });*/
     }
 
     @Override
@@ -192,47 +210,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.send_chat_msg:
                 if (!chatEditText.getText().toString().isEmpty()) {
+                    hideKeyboard(this);
                     if (engine.chatEventListener != null) {
                         engine.chatEventListener.sendMessage(chatEditText.getText().toString(), new CallbackListener() {
                             @Override
                             public void onSuccess(String msg, Object... obj) {
-                                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
                                 chatEditText.setText("");
                             }
 
                             @Override
                             public void onError(String msg, Object... obj) {
-                                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
+                                Log.d("Test ", msg);
                             }
                         });
                     } else {
                         //error - user needs to initialize engine first
-                        Toast.makeText(MainActivity.this, "Invite a Friend, before sending message", Toast.LENGTH_LONG).show();
+                        Snackbar.make(mainLayout, "Invite a Friend, before sending message", Snackbar.LENGTH_LONG).show();
                     }
                 } else {
                     //dismiss KB if up
-                    Toast.makeText(MainActivity.this, "Type the message to send", Toast.LENGTH_LONG).show();
+
                 }
                 break;
 
             case R.id.chat_together_btn:
-                Toast.makeText(MainActivity.this, "chat together clicked", Toast.LENGTH_LONG).show();
-                mNameTextLayout.setVisibility(View.VISIBLE);
-                mChatTogether.setVisibility(View.GONE);
-                //set user name
+                //user has already set the name
+                if (mUserName != null && !mUserName.isEmpty())
+                    mNameDoneBtn.callOnClick();
+                else {
+                    hideAllRelatedChatLayouts();
+                    mNameTextLayout.setVisibility(View.VISIBLE);
+
+                }
+
                 break;
 
             case R.id.name_done_btn:
-                if (mNameEditText.getText().toString().isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Enter name", Toast.LENGTH_LONG).show();
+                if (mNameEditText.getText().toString().isEmpty() && mUserName.isEmpty()) {
+                    Snackbar.make(mainLayout, "Enter Name", Snackbar.LENGTH_LONG).show();
                 } else {
+                    hideKeyboard(this);
+
+                    mUserName = mNameEditText.getText().toString();
+                    mNameTextLayout.setVisibility(View.GONE);
+                    //change color of chat icon
+                    updateName(mUserName);
+                    mChatTogether.setBackgroundColor(getResources().getColor(R.color.transparent));
+                    mChatTogether.setVisibility(View.GONE);
                     endSession.setVisibility(View.VISIBLE);
                     mAvatarLayout.setVisibility(View.VISIBLE);
                     mInviteBtn.setVisibility(View.VISIBLE);
                     mChatBoxContainer.setVisibility(View.VISIBLE);
-                    mNameTextLayout.setVisibility(View.GONE);
-
+                    mChatListViewContainer.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.end_session:
+                mParticipantList.clear();
+                mAvatarAdapter.updateAvatarList(mParticipantList);
+                engine.endSession();
+                engine.chatEventListener.reset();
                 break;
 
         }
@@ -240,8 +278,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void enterSession(Intent intent) {
         intentURI = intent.getData();
+        //means app is entering from link
         if (intentURI != null) {
             sessionId = getIntent().getExtras().getString("sessionId");
+            mChatTogether.callOnClick();
         }
     }
 
@@ -283,21 +323,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAvatarListView.setAdapter(mAvatarAdapter);
     }
 
-    public void updateName() {
+    //Way of updating User Name
+    public void updateName(String name) {
         UserInfo userInfo = new UserInfo();
-        userInfo.setName("Kesh" + UUID.randomUUID().toString());
+        userInfo.setName(name);
         userInfo.setProfilePicUrl("");
         userInfo.setAppSpecificUserID("A12345" + UUID.randomUUID().toString());
-        addUser = new AddUserImpl();
-        addUser.addUser(userInfo, new CallbackListener() {
+        engine.addUserListener.addUser(userInfo, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(String msg, Object... obj) {
-                Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -317,7 +357,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onError(String msg, Object... obj) {
-                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+                    Snackbar.make(mainLayout, msg, Snackbar.LENGTH_LONG).show();
                 }
             });
         }
@@ -326,6 +366,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -339,9 +384,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
+        if (endSession.getVisibility() == View.VISIBLE || mNameTextLayout.getVisibility() == View.VISIBLE || mChatMessageAdapter.getItemCount() > 0) {
+            mChatTogether.setVisibility(View.VISIBLE);
+            hideAllRelatedChatLayouts();
+            return;
+        }
         super.onBackPressed();
         mParticipantList.clear();
         engine.endSession();
         engine.clearAllData();
     }
+
+    public void hideAllRelatedChatLayouts(){
+        endSession.setVisibility(View.GONE);
+        mNameTextLayout.setVisibility(View.GONE);
+        mAvatarLayout.setVisibility(View.GONE);
+        mChatBoxContainer.setVisibility(View.GONE);
+        mChatListViewContainer.setVisibility(View.GONE);
+        mInviteBtn.setVisibility(View.GONE);
+    }
+
+    public float convertDpToPixel(Context c, float dp) {
+        float density = c.getResources().getDisplayMetrics().density;
+        float pixel = dp * density;
+
+        return pixel;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void showRejoinDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Previous Session still exists. Would you like to rejoin?")
+                .setCancelable(false)
+                .setPositiveButton("Rejoin", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Snackbar.make(mainLayout, "Rejoin",
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                        Snackbar.make(mainLayout, "Cancel",
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.setTitle("Rejoin");
+        alert.show();
+    }
+
 }
