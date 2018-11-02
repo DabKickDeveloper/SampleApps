@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Animation slideAnimation;
     TextView mNewMsgText;
     boolean isEndSessionClicked = false, isUserJoinedViaLink = false;
+    String currentUserAppSpecificID;
 
 
     private void setUpLayoutManager() {

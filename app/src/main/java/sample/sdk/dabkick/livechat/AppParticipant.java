@@ -24,6 +24,10 @@ public class AppParticipant {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public void setChatMsgUserName(String userName) {
         this.userName = userName;
     }
