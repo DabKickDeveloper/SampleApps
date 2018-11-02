@@ -8,4 +8,5 @@
     <color name="black">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="accent">#00BCD4</color>
+    <color name="active_session_green">#00ff00</color>
 </resources>

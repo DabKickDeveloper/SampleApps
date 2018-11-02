@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/end_session"
         android:orientation="vertical">
 
         <TextView
@@ -116,6 +117,20 @@
         android:background="@color/transparent"
         android:visibility="visible" />
 
+    <TextView
+        android:id="@+id/new_msg_text"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:layout_toLeftOf="@+id/chat_together_btn"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/new_chat_msg"
+        android:visibility="gone"
+        android:maxLines="1"
+        android:layout_marginBottom="25dp"/>
+
     <Button
         android:id="@+id/btn_invite_friend"
         android:layout_width="match_parent"
@@ -153,7 +168,7 @@
             android:clickable="true"
             android:layout_gravity="center_vertical"
             android:background="@null"
-            android:hint="@string/chat_message_field_hint"
+            android:hint="@string/chat_edit_text_hint_before_invite"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textSize="15sp" />
@@ -179,12 +194,11 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listview_chat"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:divider="@null"
             android:transcriptMode="alwaysScroll"
             app:stackFromEnd="true" />
     </LinearLayout>
-
 
 </RelativeLayout>

@@ -2,14 +2,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle" >
 
-    <!-- View background color -->
     <stroke android:width="2dp"
-        android:color="@color/chatbar_btn_outline" />
-
+        android:color="@color/white" />
+    <solid android:color="@color/white"/>
 
     <!-- The radius makes the corners rounded -->
     <corners
         android:radius="7dp">
     </corners>
 </shape>
-

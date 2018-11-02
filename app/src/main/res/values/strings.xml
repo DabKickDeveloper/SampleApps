@@ -3,7 +3,8 @@
     <string name="developer_id">DKe1ac069ddf1011e7a1d8062</string>
     <string name="developer_key">f84bd8d546b10cff2b601093e47f61</string>
     <string name="end_session">End Session</string>
+    <string name="rejoin_session">Rejoin Session</string>
     <string name="invite_friend">Invite Friend</string>
-    <string name="name_edit_text_hint">Type your name here</string>
-    <string name="done">Done</string>
+    <string name="chat_edit_text_hint_before_invite">Invite friends to send message</string>
+    <string name="chat_edit_text_hint_after_invite">Type your message here</string>
 </resources>
