@@ -4,4 +4,26 @@
     <string name="developer_key">f84bd8d546b10cff2b601093e47f61</string>
     <string name="end_session">End Session</string>
     <string name="invite_friend">Invite Friend</string>
+    <string name="rejoin_session">Rejoin Session</string>
+    <string name="chat_edit_text_hint_before_invite">Invite friends to send message</string>
+    <string name="chat_edit_text_hint_after_invite">Type your message here</string>
+
+    <string-array name="roomNames">
+        <item>Coucou chloe w/ akina unit</item>
+        <item>Inner realm w/ damon eliza palermo  \u0026 jolly mare</item>
+        <item>Miss modular w/ selam bekele</item>
+    </string-array>
+
+    <string-array name="roomLocations">
+        <item>London</item>
+        <item>Los Angeles</item>
+        <item>Los Angeles</item>
+    </string-array>
+
+    <string-array name="roomDates">
+        <item>11.8.18</item>
+        <item>9.11.18</item>
+        <item>8.11.18</item>
+    </string-array>
+
 </resources>

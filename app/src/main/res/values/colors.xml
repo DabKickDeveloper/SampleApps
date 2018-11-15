@@ -8,4 +8,6 @@
     <color name="black">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="accent">#00BCD4</color>
+    <color name="pink">#ff1654</color>
+    <color name="sixty_black">#99000000</color>
 </resources>
