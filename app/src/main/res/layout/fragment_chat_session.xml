@@ -11,48 +11,88 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/back_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:scaleType="center"
             android:src="@drawable/cancel_img" />
 
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:background="#B3000000"
-            android:padding="8dp"
-            android:text="User name"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:padding="5dp">
 
+            <TextView
+                android:id="@+id/user_room_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.95"
+                android:ellipsize="marquee"
+                android:fontFamily="Roboto-Condensed"
+                android:singleLine="true"
+                android:text="Coucou chloe w akina unit"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/user_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_room_name"
+                android:layout_margin="5dp"
+                android:alpha="0.95"
+                android:ellipsize="end"
+                android:fontFamily="Roboto regular"
+                android:maxLines="1"
+                android:text="LONDON"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/user_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_room_name"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:alpha="0.95"
+                android:ellipsize="end"
+                android:fontFamily="Roboto regular"
+                android:maxLines="1"
+                android:text="11.8.18"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+        </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/chat_box_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        android:weightSum="1">
+        android:visibility="visible">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/chatEditText"
-            android:layout_width="0dp"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.95"
             android:background="@null"
             android:backgroundTint="@color/white"
             android:clickable="true"
@@ -63,17 +103,25 @@
             android:textColorHint="@color/white"
             android:textSize="17sp" />
 
+        <View
+            android:layout_width="280dp"
+            android:layout_height="2dp"
+            android:layout_below="@+id/chatEditText"
+            android:layout_margin="5dp"
+            android:background="@color/white" />
+
+
         <ImageButton
             android:id="@+id/send_chat_msg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center_vertical"
-            android:layout_weight="0.05"
+            android:layout_toLeftOf="@+id/chatEditText"
             android:background="@color/transparent"
             android:scaleType="centerCrop"
-            android:src="@drawable/send_chat_msg"
-            android:textAllCaps="false" />
-    </LinearLayout>
+            android:src="@drawable/send_chat_msg" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/chat_list_view_container"
@@ -92,5 +140,6 @@
             android:transcriptMode="alwaysScroll"
             app:stackFromEnd="true" />
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -41,7 +41,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     ChatMsgAdapter mChatMessageAdapter;
     List<MessageInfo> mChatMessageList = new ArrayList<MessageInfo>();
     ChatBackPress chatBackPress;
-    TextView mUserName;
+    TextView mUserName, mUserRoomLocation, mUserRoomDate;
 //    String currentUserAppSpecificID;
     ReceivedMessageUpdate updateMessageList;
     RelativeLayout mParentLayout;
@@ -55,7 +55,10 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         sendBtn = view.findViewById(R.id.send_chat_msg);
         sendBtn.setOnClickListener(this);
         chatListView = view.findViewById(R.id.listview_chat);
-        mUserName = view.findViewById(R.id.user_name);
+        mUserName = view.findViewById(R.id.user_room_name);
+        mUserRoomLocation = view.findViewById(R.id.user_location);
+        mUserRoomDate = view.findViewById(R.id.user_date);
+
         setUpLayoutManager();
         setUpChatAdapter();
         mBackBtn = view.findViewById(R.id.back_btn);
@@ -90,6 +93,14 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         }, 100);
     }
 
+    public void initViews() {
+        ChatRoom room = getRoomInfo();
+        if (room != null) {
+            mUserName.setText(room.getRoomName());
+            mUserRoomLocation.setText(room.getRoomLocation());
+            mUserRoomDate.setText(room.getRoomDate());
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,8 +110,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
         findViews();
 
-        //Setting User Name
-        mUserName.setText(getRoomTitle());
+        initViews();
 
         //added to scroll the list to the last item when edit text looses focus
         chatEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -208,13 +218,12 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         void messageUpdateList(MessageInfo messageInfo);
     }
 
-    private String getRoomTitle() {
+    private ChatRoom getRoomInfo() {
         if (ChatRoomPagerAdapter.getCurrentItem() < ((HomepageActivity) getActivity()).mRoomPagerAdapter.getCount()) {
             ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(ChatRoomPagerAdapter.getCurrentItem());
-            return room.getRoomName();
+            return room;
         }
-
-        return "NONE";
+        return null;
     }
 
 

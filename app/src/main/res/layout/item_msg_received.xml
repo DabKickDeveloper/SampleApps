@@ -19,7 +19,7 @@
         android:background="@color/white"
         android:fontFamily="Roboto regular"
         android:textSize="17sp"
-        android:alpha="1"
+        android:alpha="0.95"
         tools:text="ashwini"/>
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_toRightOf="@+id/recieved_msg_name"
         android:padding="5dp"
         android:text="excfghjbnlkm"
-        android:alpha="1"
+        android:alpha="0.95"
         android:fontFamily="Roboto regular"
         android:textColor="@color/colorWhite"
         android:textSize="17sp" />

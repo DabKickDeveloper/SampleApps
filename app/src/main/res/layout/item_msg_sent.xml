@@ -26,7 +26,7 @@
             android:background="@color/white"
             android:textSize="17sp"
             tools:text="john"
-            android:alpha="1" />
+            android:alpha="0.95" />
 
         <TextView
             android:id="@+id/sent_msg"
@@ -37,6 +37,6 @@
             android:padding="5dp"
             android:textColor="@color/white"
             android:textSize="17sp"
-            android:alpha="1" />
+            android:alpha="0.95" />
     </RelativeLayout>
 </RelativeLayout>

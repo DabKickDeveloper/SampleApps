@@ -8,7 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabkick.engine.Public.Authentication;
@@ -41,6 +44,10 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     private UserPresenceCallBackListener userPresenceCallBackListener;
     private StartLiveChat engine;
     ChatSessionFragment chatSessionFragment;
+
+    Animation slideAnimation;
+    RelativeLayout mNewMsgLayoutContainer, mChatBtnContainer;
+    TextView mIncomingNewMsg;
 
     // class variable
     final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
@@ -87,6 +94,9 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         mRoomImg = view.findViewById(R.id.room_desc_img);
         mChatTogetherBtn = view.findViewById(R.id.chat_btn);
         mUserCount = view.findViewById(R.id.unread_msgs);
+        mNewMsgLayoutContainer = view.findViewById(R.id.new_msg_text_container);
+        mIncomingNewMsg = view.findViewById(R.id.new_msg_text);
+        mChatBtnContainer = view.findViewById(R.id.chat_btn_container);
 
     }
 
@@ -145,6 +155,14 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                 if (getActivity().getClass() == HomepageActivity.class) {
                     //pass in the user details here
 
+                    if (slideAnimation != null) {
+                        mNewMsgLayoutContainer.clearAnimation();
+                        slideAnimation.reset();
+                        slideAnimation = null;
+                    }
+
+                    mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.sixty_black));
+
                     FragmentTransaction transaction = ((HomepageActivity) getActivity()).getSupportFragmentManager().beginTransaction();
                     transaction.replace(((((HomepageActivity) getActivity()).chatSessionFragContainer.getId())), chatSessionFragment);
                     transaction.addToBackStack(null);
@@ -171,7 +189,8 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
             @Override
             public void receivedChatMessage(String roomName, MessageInfo message) {
                 messageUpdateList(message);
-
+                if (message != null)
+                    incomingMsgSlideAnimation(message.getChatMessage());
             }
 
             @Override
@@ -315,5 +334,55 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     @Override
     public void messageUpdateList(MessageInfo messageInfo) {
         chatSessionFragment.updateMessageList(messageInfo);
+    }
+
+    public void incomingMsgSlideAnimation(String msg) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.active_session_green));
+                slideAnimation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_animation);
+                mNewMsgLayoutContainer.startAnimation(slideAnimation);
+
+                slideAnimation.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        mNewMsgLayoutContainer.setVisibility(View.VISIBLE);
+                        mIncomingNewMsg.setVisibility(View.VISIBLE);
+                        if (msg != null && !msg.isEmpty())
+                            mIncomingNewMsg.setText(msg);
+
+                        mChatBtnContainer.bringToFront();
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        mNewMsgLayoutContainer.clearAnimation();
+                        if (slideAnimation != null) {
+                            slideAnimation.reset();
+                            slideAnimation.cancel();
+                        }
+                        mIncomingNewMsg.setVisibility(View.GONE);
+                        mNewMsgLayoutContainer.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+                    }
+                });
+            }
+        });
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (slideAnimation != null) {
+            mNewMsgLayoutContainer.clearAnimation();
+            slideAnimation.reset();
+            slideAnimation = null;
+        }
     }
 }

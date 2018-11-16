@@ -81,6 +81,6 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        startLiveChat.endLiveChat();
+        //startLiveChat.endLiveChat();
     }
 }
