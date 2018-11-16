@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.dabkick.engine.DKServer.Retrofit.Prefs;
 import com.dabkick.engine.Public.CallbackListener;
-import com.dabkick.engine.Public.InitializeLiveChat;
 import com.dabkick.engine.Public.MessageInfo;
+import com.dabkick.engine.Public.StartLiveChat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     AppCompatImageView mBackBtn;
     View view;
     AppCompatEditText chatEditText;
-    private InitializeLiveChat engine;
+    private StartLiveChat engine;
     RecyclerView chatListView;
     ChatMsgAdapter mChatMessageAdapter;
     List<MessageInfo> mChatMessageList = new ArrayList<MessageInfo>();
@@ -65,8 +65,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     }
 
     public void setUpChatAdapter() {
-        if (((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener != null) {
-            mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener.getChatMessages(""));
+        if (((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener != null) {
+            mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.getChatMessages(""));
             mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
             if (chatListView != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -100,7 +100,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         findViews();
 
         //Setting User Name
-        mUserName.setText(Prefs.getName());
+        mUserName.setText(getRoomTitle());
 
         //added to scroll the list to the last item when edit text looses focus
         chatEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -126,11 +126,11 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
             case R.id.send_chat_msg:
                 MessageInfo messageInfo = new MessageInfo();
                 messageInfo.setChatMessage(chatEditText.getText().toString());
-                messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.getUserId());
-                messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.getUserName());
+                messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserId());
+                messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);
                 Utils.hideKeyboard(getActivity());
-                ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
+                ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
                     @Override
                     public void onSuccess(String msg, Object... obj) {
                         chatEditText.setText("");
@@ -164,8 +164,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         chatListView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    /*public void setEngine(InitializeLiveChat initializeLiveChat){
-        this.initializeLiveChat = initializeLiveChat;
+    /*public void setEngine(StartLiveChat startLiveChat){
+        this.startLiveChat = startLiveChat;
         setUpChatAdapter();
     }*/
 
@@ -206,6 +206,15 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
     public interface ReceivedMessageUpdate{
         void messageUpdateList(MessageInfo messageInfo);
+    }
+
+    private String getRoomTitle() {
+        if (ChatRoomPagerAdapter.getCurrentItem() < ((HomepageActivity) getActivity()).mRoomPagerAdapter.getCount()) {
+            ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(ChatRoomPagerAdapter.getCurrentItem());
+            return room.getRoomName();
+        }
+
+        return "NONE";
     }
 
 

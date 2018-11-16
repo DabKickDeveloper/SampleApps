@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.dabkick.engine.Public.Authentication;
 import com.dabkick.engine.Public.CallbackListener;
-import com.dabkick.engine.Public.InitializeLiveChat;
+import com.dabkick.engine.Public.StartLiveChat;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class HomepageActivity extends AppCompatActivity {
     CustomViewPager mChatRoomPager;
     public ChatRoomPagerAdapter mRoomPagerAdapter;
     ArrayList<ChatRoom> mChatRoomList;
-    public InitializeLiveChat initializeLiveChat;
+    public StartLiveChat startLiveChat;
     FrameLayout chatSessionFragContainer;
     Authentication auth;
 
@@ -44,7 +44,7 @@ public class HomepageActivity extends AppCompatActivity {
         auth = new Authentication("DKe1ac069ddf1011e7a1d8062", "f84bd8d546b10cff2b601093e47f61");
 
         //Initialize Engine
-        initializeLiveChat = new InitializeLiveChat(HomepageActivity.this, auth, new CallbackListener() {
+         startLiveChat = new StartLiveChat(HomepageActivity.this, auth, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
 
@@ -81,6 +81,6 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        initializeLiveChat.endLiveChat();
+        startLiveChat.endLiveChat();
     }
 }
