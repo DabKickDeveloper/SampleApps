@@ -20,19 +20,23 @@
             android:layout_marginRight="15dp"
             android:ellipsize="end"
             android:maxLength="25"
+            android:fontFamily="Roboto regular"
             android:padding="5dp"
             android:textColor="@color/black"
             android:background="@color/white"
-            android:textSize="15sp"
-            tools:text="john" />
+            android:textSize="17sp"
+            tools:text="john"
+            android:alpha="1" />
 
         <TextView
             android:id="@+id/sent_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="Roboto regular"
             android:layout_toRightOf="@+id/sender_msg_name"
             android:padding="5dp"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="17sp"
+            android:alpha="1" />
     </RelativeLayout>
 </RelativeLayout>

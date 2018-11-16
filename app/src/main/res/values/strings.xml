@@ -9,9 +9,9 @@
     <string name="chat_edit_text_hint_after_invite">Type your message here</string>
 
     <string-array name="roomNames">
-        <item>Coucou chloe w/ akina unit</item>
-        <item>Inner realm w/ damon eliza palermo  \u0026 jolly mare</item>
-        <item>Miss modular w/ selam bekele</item>
+        <item>Coucou chloe w akina unit</item>
+        <item>Inner realm w damon eliza palermo  \u0026 jolly mare</item>
+        <item>Miss modular w selam bekele</item>
     </string-array>
 
     <string-array name="roomLocations">

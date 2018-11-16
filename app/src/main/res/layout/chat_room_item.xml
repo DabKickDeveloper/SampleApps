@@ -15,8 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/coucou" />
+            android:scaleType="centerCrop" />
 
         <RelativeLayout
             android:id="@+id/chat_btn_container"
@@ -30,11 +29,12 @@
 
             <ImageButton
                 android:id="@+id/chat_btn"
-                android:layout_width="55dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="2dp"
                 android:background="@color/transparent"
                 android:src="@drawable/chat_bubble_icon"
+                android:scaleType="centerCrop"
                 android:visibility="visible" />
 
             <TextView

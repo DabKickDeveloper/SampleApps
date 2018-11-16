@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabkick.engine.DKServer.Retrofit.Prefs;
@@ -43,6 +44,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     TextView mUserName;
 //    String currentUserAppSpecificID;
     ReceivedMessageUpdate updateMessageList;
+    RelativeLayout mParentLayout;
 
     public ChatSessionFragment() {
     }
@@ -58,10 +60,12 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         setUpChatAdapter();
         mBackBtn = view.findViewById(R.id.back_btn);
         mBackBtn.setOnClickListener(this);
+        mParentLayout = view.findViewById(R.id.parent_layout);
+        mParentLayout.setOnClickListener(this);
     }
 
     public void setUpChatAdapter() {
-        if (((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener != null ) {
+        if (((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener != null) {
             mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener.getChatMessages(""));
             mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
             if (chatListView != null) {
@@ -78,6 +82,12 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
             if (chatListView != null)
                 chatListView.setAdapter(mChatMessageAdapter);
         }
+        chatListView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                chatListView.scrollToPosition(chatListView.getAdapter().getItemCount() - 1);
+            }
+        }, 100);
     }
 
 
@@ -92,6 +102,21 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         //Setting User Name
         mUserName.setText(Prefs.getName());
 
+        //added to scroll the list to the last item when edit text looses focus
+        chatEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean isFocused) {
+                chatListView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (chatListView != null && chatListView.getAdapter() != null && !isFocused)
+                            chatListView.scrollToPosition(chatListView.getAdapter().getItemCount() - 1);
+                    }
+                }, 100);
+
+            }
+        });
+
         return view;
     }
 
@@ -104,6 +129,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
                 messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.getUserId());
                 messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);
+                Utils.hideKeyboard(getActivity());
                 ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
                     @Override
                     public void onSuccess(String msg, Object... obj) {
@@ -119,14 +145,16 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
             case R.id.back_btn:
                 if (getActivity() != null) {
+                    Utils.hideKeyboard(getActivity());
                     getActivity().onBackPressed();
                     mChatMessageList.clear();
                     chatBackPress.backButtonClick();
                 }
-//                FragmentManager fm = getFragmentManager();
-//                ChatRoomFragment fragm = (ChatRoomFragment) fm.findFragmentByTag("ChatRoomFragment");
-//                fragm.unSubscribeCall();
-//                ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.chatEventListener.clearAllMessages();
+                break;
+
+            case R.id.parent_layout:
+                Utils.hideKeyboard(getActivity());
+                break;
         }
     }
 
@@ -159,6 +187,14 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
             @Override
             public void run() {
                 mChatMessageAdapter.notifyDataSetChanged();
+                if(chatListView != null) {
+                    chatListView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            chatListView.scrollToPosition(chatListView.getAdapter().getItemCount() - 1);
+                        }
+                    }, 100);
+                }
             }
         });
     }

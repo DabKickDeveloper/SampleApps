@@ -3,6 +3,7 @@ package sample.sdk.dabkick.livechat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
     private TextView mRoomName, mUserCount, mRoomLocation, mRoomDate, mRoomDescription;
     private ImageButton mChatTogetherBtn;
+    private AppCompatImageView mRoomImg;
 
     private Authentication auth;
     private LiveChatCallbackListener liveChatCallbackListener;
@@ -82,7 +84,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         mRoomDate = view.findViewById(R.id.room_date);
         mRoomLocation = view.findViewById(R.id.room_location);
         mRoomDescription = view.findViewById(R.id.room_description);
-
+        mRoomImg = view.findViewById(R.id.room_desc_img);
         mChatTogetherBtn = view.findViewById(R.id.chat_btn);
         mUserCount = view.findViewById(R.id.unread_msgs);
 
@@ -96,20 +98,32 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         chatSessionFragment = new ChatSessionFragment();
         chatSessionFragment.setbackPress(this);
         chatSessionFragment.setMessageList(this);
-        ((HomepageActivity)getActivity()).mRoomPagerAdapter.populateRooms();
+        ((HomepageActivity) getActivity()).mRoomPagerAdapter.populateRooms();
 
     }
 
 
-     public void initViews(){
-         if(roomPos < ((HomepageActivity)getActivity()).mRoomPagerAdapter.getCount()){
-             ChatRoom room = ((HomepageActivity)getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
-             mRoomName.setText(room.getRoomName());
-             mRoomDescription.setText(room.getRoomDesc());
-             mRoomLocation.setText(room.getRoomLocation());
-             mRoomDate.setText(room.getRoomDate());
-         }
-     }
+    public void initViews() {
+        if (roomPos < ((HomepageActivity) getActivity()).mRoomPagerAdapter.getCount()) {
+            ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
+            mRoomName.setText(room.getRoomName());
+            mRoomDescription.setText(room.getRoomDesc());
+            mRoomLocation.setText(room.getRoomLocation());
+            mRoomDate.setText(room.getRoomDate());
+
+            switch (roomPos) {
+                case 0:
+                    mRoomImg.setBackgroundResource(R.drawable.coucou);
+                    break;
+                case 1:
+                    mRoomImg.setBackgroundResource(R.drawable.innerrealm);
+                    break;
+                case 2:
+                    mRoomImg.setBackgroundResource(R.drawable.missmodular);
+                    break;
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -206,7 +220,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
         };
 
-        ChatRoom room = ((HomepageActivity)getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
+        ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
 
         ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.subscribe(room.getRoomName(), liveChatCallbackListener, enginePresenceCallbackListener, new CallbackListener() {
             @Override
@@ -270,8 +284,8 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     public void onDestroyView() {
         super.onDestroyView();
         Log.d("TAGGOW", "onDestroyView: ");
-        ChatRoom room = ((HomepageActivity)getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.endSession();
+        ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat.leaveSession();
         ((HomepageActivity) Objects.requireNonNull(getActivity())).initializeLiveChat
                 .unSubscribe(room.getRoomName(), liveChatCallbackListener, enginePresenceCallbackListener, new CallbackListener() {
                     @Override
