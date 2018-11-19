@@ -17,10 +17,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.dabkick.engine.DKServer.Retrofit.Prefs;
 import com.dabkick.engine.Public.CallbackListener;
 import com.dabkick.engine.Public.MessageInfo;
-import com.dabkick.engine.Public.StartLiveChat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,6 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     AppCompatImageView mBackBtn;
     View view;
     AppCompatEditText chatEditText;
-    private StartLiveChat engine;
     RecyclerView chatListView;
     ChatMsgAdapter mChatMessageAdapter;
     List<MessageInfo> mChatMessageList = new ArrayList<MessageInfo>();

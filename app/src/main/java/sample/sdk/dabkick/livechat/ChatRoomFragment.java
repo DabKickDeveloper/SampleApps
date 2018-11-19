@@ -18,14 +18,11 @@ import com.dabkick.engine.Public.Authentication;
 import com.dabkick.engine.Public.CallbackListener;
 import com.dabkick.engine.Public.LiveChatCallbackListener;
 import com.dabkick.engine.Public.MessageInfo;
-import com.dabkick.engine.Public.StartLiveChat;
 import com.dabkick.engine.Public.UserInfo;
 import com.dabkick.engine.Public.UserPresenceCallBackListener;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 import timber.log.Timber;
@@ -42,7 +39,6 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     private Authentication auth;
     private LiveChatCallbackListener liveChatCallbackListener;
     private UserPresenceCallBackListener userPresenceCallBackListener;
-    private StartLiveChat engine;
     ChatSessionFragment chatSessionFragment;
 
     Animation slideAnimation;
@@ -308,8 +304,22 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         super.onDestroyView();
         Log.d("TAGGOW", "onDestroyView: ");
         ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
+        CallbackListener cbl = new CallbackListener() {
+            @Override
+            public void onSuccess(String s, Object... objects) {
+                Log.d("TAGGOW", "Leave Session: Success");
+
+            }
+
+            @Override
+            public void onError(String s, Object... objects) {
+
+                Log.d("TAGGOW", "Leave Session: Error");
+
+            }
+        };
         chatSessionFragment.mChatMessageList.clear();
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.leaveSession();
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.leaveSession(room.getRoomName(), cbl);
         ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat
                 .unSubscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
                     @Override

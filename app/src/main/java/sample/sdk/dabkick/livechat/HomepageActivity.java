@@ -1,22 +1,18 @@
 package sample.sdk.dabkick.livechat;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.FrameLayout;
 
 import com.dabkick.engine.Public.Authentication;
 import com.dabkick.engine.Public.CallbackListener;
-import com.dabkick.engine.Public.StartLiveChat;
+import com.dabkick.engine.Public.DKLiveChat;
 
 import java.util.ArrayList;
 
@@ -25,7 +21,7 @@ public class HomepageActivity extends AppCompatActivity {
     CustomViewPager mChatRoomPager;
     public ChatRoomPagerAdapter mRoomPagerAdapter;
     ArrayList<ChatRoom> mChatRoomList;
-    public StartLiveChat startLiveChat;
+    public DKLiveChat startLiveChat;
     FrameLayout chatSessionFragContainer;
     Authentication auth;
 
@@ -51,7 +47,7 @@ public class HomepageActivity extends AppCompatActivity {
         auth = new Authentication("DKe1ac069ddf1011e7a1d8062", "f84bd8d546b10cff2b601093e47f61");
 
         //Initialize Engine
-         startLiveChat = new StartLiveChat(HomepageActivity.this, auth, new CallbackListener() {
+         startLiveChat = new DKLiveChat(HomepageActivity.this, auth, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
 
