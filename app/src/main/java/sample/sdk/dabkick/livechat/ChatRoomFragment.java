@@ -171,13 +171,24 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         liveChatCallbackListener = new LiveChatCallbackListener() {
             @Override
             public void receivedChatMessage(String roomName, MessageInfo message) {
-                messageUpdateList(message);
-                if (message != null)
+                if(isDetailChatOpen) {
+                    messageUpdateList(message);
+                }else {
                     incomingMsgSlideAnimation(message.getChatMessage());
+                    updateChatMessagList(message);
+                }
             }
 
             @Override
             public void getPreviousMessages(String roomName, List<MessageInfo> messageInfo) {
+                String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName() + " entered the room";
+                MessageInfo addUserInmessageInfo = new MessageInfo();
+                addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserId());
+                addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
+                addUserInmessageInfo.setChatMessage(userEnteredMessage);
+                addUserInmessageInfo.setSystemMessage(true);
+                messageInfo.add(addUserInmessageInfo);
+                previousMessageList(messageInfo);
             }
 
         };
@@ -191,7 +202,12 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                 messageInfo.setUserName(participant.getName());
                 messageInfo.setChatMessage(userEnteredMessage);
                 messageInfo.setSystemMessage(true);
-                messageUpdateList(messageInfo);
+                if(isDetailChatOpen) {
+                    messageUpdateList(messageInfo);
+                }else{
+                    incomingMsgSlideAnimation(userEnteredMessage);
+                    updateChatMessagList(messageInfo);
+                }
             }
 
             @Override
@@ -202,7 +218,12 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                 messageInfo.setUserName(participant.getName());
                 messageInfo.setChatMessage(userExitMessage);
                 messageInfo.setSystemMessage(true);
-                messageUpdateList(messageInfo);
+                if(isDetailChatOpen) {
+                    messageUpdateList(messageInfo);
+                }else{
+                    incomingMsgSlideAnimation(userExitMessage);
+                    updateChatMessagList(messageInfo);
+                }
             }
 
             @Override
@@ -287,6 +308,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         super.onDestroyView();
         Log.d("TAGGOW", "onDestroyView: ");
         ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
+        chatSessionFragment.mChatMessageList.clear();
         ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.leaveSession();
         ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat
                 .unSubscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
@@ -317,6 +339,16 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     @Override
     public void messageUpdateList(MessageInfo messageInfo) {
         chatSessionFragment.updateMessageList(messageInfo);
+    }
+
+    @Override
+    public void previousMessageList(List<MessageInfo> previousMessageInfo) {
+        chatSessionFragment.updatePreviousMessageList(previousMessageInfo);
+    }
+
+    @Override
+    public void updateChatMessagList(MessageInfo messageInfoList) {
+        chatSessionFragment.updateChatMessageList(messageInfoList);
     }
 
     public void incomingMsgSlideAnimation(String msg) {

@@ -69,7 +69,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
     public void setUpChatAdapter() {
         if (((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener != null) {
-            mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.getChatMessages(""));
+           // mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.getChatMessages(""));
             mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
             if (chatListView != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -134,23 +134,25 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.send_chat_msg:
-                MessageInfo messageInfo = new MessageInfo();
-                messageInfo.setChatMessage(chatEditText.getText().toString());
-                messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserId());
-                messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
+                if(!chatEditText.getText().toString().isEmpty() && !chatEditText.getText().toString().equals("")) {
+                    MessageInfo messageInfo = new MessageInfo();
+                    messageInfo.setChatMessage(chatEditText.getText().toString());
+                    messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserId());
+                    messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);
-                Utils.hideKeyboard(getActivity());
-                ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
-                    @Override
-                    public void onSuccess(String msg, Object... obj) {
-                        chatEditText.setText("");
-                    }
+                    Utils.hideKeyboard(getActivity());
+                    ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
+                        @Override
+                        public void onSuccess(String msg, Object... obj) {
+                            chatEditText.setText("");
+                        }
 
-                    @Override
-                    public void onError(String msg, Object... obj) {
+                        @Override
+                        public void onError(String msg, Object... obj) {
 
-                    }
-                });
+                        }
+                    });
+                }
                 break;
 
             case R.id.back_btn:
@@ -158,7 +160,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
                     Utils.hideKeyboard(getActivity());
                     getActivity().onBackPressed();
                     ChatRoomFragment.isDetailChatOpen =false;
-                    mChatMessageList.clear();
+                    //mChatMessageList.clear();
                     chatBackPress.backButtonClick();
                 }
                 break;
@@ -210,6 +212,14 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         });
     }
 
+    public void updatePreviousMessageList(List<MessageInfo> previousMessageList){
+        mChatMessageList.addAll(previousMessageList);
+    }
+
+    public void updateChatMessageList(MessageInfo messageInfo){
+        mChatMessageList.add(messageInfo);
+    }
+
     public interface ChatBackPress{
 
         void backButtonClick();
@@ -217,6 +227,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
     public interface ReceivedMessageUpdate{
         void messageUpdateList(MessageInfo messageInfo);
+        void previousMessageList(List<MessageInfo> previousMessageInfo);
+        void updateChatMessagList(MessageInfo messageInfoList);
     }
 
     private ChatRoom getRoomInfo() {
@@ -225,6 +237,13 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
             return room;
         }
         return null;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ChatRoomFragment.isDetailChatOpen =false;
+        chatBackPress.backButtonClick();
     }
 
 
