@@ -152,7 +152,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         });
 
 
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.joinSession(getRoomName(ChatRoomPagerAdapter.getCurrentItem()), createUserInfo(), new CallbackListener() {
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.joinSession(getRoomName(ChatRoomPagerAdapter.getCurrentItem()), createUserInfo(), new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
                 //call subscribe here
@@ -177,10 +177,10 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
             @Override
             public void getPreviousMessages(String roomName, List<MessageInfo> messageInfo) {
-                String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName() + " entered the room";
+                String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserName() + " entered the room";
                 MessageInfo addUserInmessageInfo = new MessageInfo();
-                addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserId());
-                addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
+                addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserId());
+                addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserName());
                 addUserInmessageInfo.setChatMessage(userEnteredMessage);
                 addUserInmessageInfo.setSystemMessage(true);
                 messageInfo.add(addUserInmessageInfo);
@@ -241,7 +241,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
         ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
 
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.subscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.subscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
             }
@@ -263,19 +263,19 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     }
 
     public void unSubscribeCall() {
-        Timber.d("startLiveChat value", ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat);
+        Timber.d("dkLiveChat value", ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat);
     }
 
     @Override
     public void backButtonClick() {
-        Timber.d("startLiveChat value", ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat);
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.clearAllMessages();
+        Timber.d("dkLiveChat value", ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat);
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener.clearAllMessages();
     }
 
     private UserInfo createUserInfo() {
         UserInfo userInfo = new UserInfo();
         userInfo.setAppSpecificUserID(UUID.randomUUID().toString());
-        userInfo.setName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
+        userInfo.setName(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserName());
         return userInfo;
     }
 
@@ -319,8 +319,8 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
             }
         };
         chatSessionFragment.mChatMessageList.clear();
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.leaveSession(room.getRoomName(), cbl);
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.leaveSession(room.getRoomName(), cbl);
+        ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat
                 .unSubscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
                     @Override
                     public void onSuccess(String msg, Object... obj) {

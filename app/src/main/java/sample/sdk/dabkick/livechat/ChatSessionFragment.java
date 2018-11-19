@@ -65,8 +65,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     }
 
     public void setUpChatAdapter() {
-        if (((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener != null) {
-           // mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.getChatMessages(""));
+        if (((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener != null) {
+           // mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener.getChatMessages(""));
             mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
             if (chatListView != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -134,11 +134,11 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
                 if(!chatEditText.getText().toString().isEmpty() && !chatEditText.getText().toString().equals("")) {
                     MessageInfo messageInfo = new MessageInfo();
                     messageInfo.setChatMessage(chatEditText.getText().toString());
-                    messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserId());
-                    messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
+                    messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserId());
+                    messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);
                     Utils.hideKeyboard(getActivity());
-                    ((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
+                    ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
                         @Override
                         public void onSuccess(String msg, Object... obj) {
                             chatEditText.setText("");
@@ -174,8 +174,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         chatListView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    /*public void setEngine(StartLiveChat startLiveChat){
-        this.startLiveChat = startLiveChat;
+    /*public void setEngine(StartLiveChat dkLiveChat){
+        this.dkLiveChat = dkLiveChat;
         setUpChatAdapter();
     }*/
 

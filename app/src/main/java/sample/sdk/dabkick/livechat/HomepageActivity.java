@@ -21,7 +21,7 @@ public class HomepageActivity extends AppCompatActivity {
     CustomViewPager mChatRoomPager;
     public ChatRoomPagerAdapter mRoomPagerAdapter;
     ArrayList<ChatRoom> mChatRoomList;
-    public DKLiveChat startLiveChat;
+    public DKLiveChat dkLiveChat;
     FrameLayout chatSessionFragContainer;
     Authentication auth;
 
@@ -47,7 +47,7 @@ public class HomepageActivity extends AppCompatActivity {
         auth = new Authentication("DKe1ac069ddf1011e7a1d8062", "f84bd8d546b10cff2b601093e47f61");
 
         //Initialize Engine
-         startLiveChat = new DKLiveChat(HomepageActivity.this, auth, new CallbackListener() {
+         dkLiveChat = new DKLiveChat(HomepageActivity.this, auth, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
 
@@ -62,7 +62,7 @@ public class HomepageActivity extends AppCompatActivity {
         mChatRoomPager.setOffscreenPageLimit(0);
         mChatRoomPager.setAdapter(mRoomPagerAdapter);
 
-        if (!startLiveChat.checkIfUserNameIsSet())
+        if (!dkLiveChat.checkIfUserNameIsSet())
             createNameAlertDialog();
 
         mChatRoomPager.setOnPageChangeListener(new CustomViewPager.OnPageChangeListener() {
@@ -87,7 +87,7 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //startLiveChat.endLiveChat();
+        //dkLiveChat.endLiveChat();
     }
 
 
@@ -113,7 +113,7 @@ public class HomepageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = userInput.getText().toString().trim();
                 if (!name.isEmpty()) {
-                    startLiveChat.updateName(name, new CallbackListener() {
+                    dkLiveChat.updateName(name, new CallbackListener() {
                         @Override
                         public void onSuccess(String msg, Object... obj) {
                             alertD.dismiss();
