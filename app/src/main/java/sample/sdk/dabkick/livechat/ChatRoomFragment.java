@@ -49,28 +49,9 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     RelativeLayout mNewMsgLayoutContainer, mChatBtnContainer;
     TextView mIncomingNewMsg;
 
-    // class variable
-    final String lexicon = "ABCDEFGHIJKLMNOPQRSTUVWXYZ12345674890";
+    static boolean isDetailChatOpen = false;
 
-    final java.util.Random rand = new java.util.Random();
-
-    // consider using a Map<String,Boolean> to say whether the identifier is being used or not
-    final Set<String> identifiers = new HashSet<String>();
-
-    public String randomIdentifier() {
-        StringBuilder builder = new StringBuilder();
-        while (builder.toString().length() == 0) {
-            int length = rand.nextInt(5) + 5;
-            for (int i = 0; i < length; i++) {
-                builder.append(lexicon.charAt(rand.nextInt(lexicon.length())));
-            }
-            if (identifiers.contains(builder.toString())) {
-                builder = new StringBuilder();
-            }
-        }
-        return builder.toString();
-    }
-
+    private boolean isInBckGrnd = false;
 
     public ChatRoomFragment() {
     }
@@ -167,6 +148,8 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                     transaction.replace(((((HomepageActivity) getActivity()).chatSessionFragContainer.getId())), chatSessionFragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
+                    isInBckGrnd = true;
+                    isDetailChatOpen = true;
                 }
 
             }
@@ -275,7 +258,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     private UserInfo createUserInfo() {
         UserInfo userInfo = new UserInfo();
         userInfo.setAppSpecificUserID(UUID.randomUUID().toString());
-        userInfo.setName(randomIdentifier());
+        userInfo.setName(((HomepageActivity) Objects.requireNonNull(getActivity())).startLiveChat.getUserName());
         return userInfo;
     }
 
@@ -340,6 +323,9 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (isDetailChatOpen)
+                    return;
+
                 mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.active_session_green));
                 slideAnimation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_animation);
                 mNewMsgLayoutContainer.startAnimation(slideAnimation);

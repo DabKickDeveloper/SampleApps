@@ -157,6 +157,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
                 if (getActivity() != null) {
                     Utils.hideKeyboard(getActivity());
                     getActivity().onBackPressed();
+                    ChatRoomFragment.isDetailChatOpen =false;
                     mChatMessageList.clear();
                     chatBackPress.backButtonClick();
                 }
