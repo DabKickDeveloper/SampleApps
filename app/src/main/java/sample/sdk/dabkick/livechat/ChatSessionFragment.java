@@ -4,12 +4,14 @@ package sample.sdk.dabkick.livechat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +67,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     }
 
     public void setUpChatAdapter() {
-        if (((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener != null) {
-           // mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener.getChatMessages(""));
+        if (((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener != null) {
+           // mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.getChatMessages(""));
             mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
             if (chatListView != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -131,14 +133,15 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.send_chat_msg:
-                if(!chatEditText.getText().toString().isEmpty() && !chatEditText.getText().toString().equals("")) {
+                //text utils checks for null object as well
+                if(!TextUtils.isEmpty(chatEditText.getText().toString().trim())) {
                     MessageInfo messageInfo = new MessageInfo();
                     messageInfo.setChatMessage(chatEditText.getText().toString());
-                    messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserId());
-                    messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.getUserName());
+                    messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserId());
+                    messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);
                     Utils.hideKeyboard(getActivity());
-                    ((HomepageActivity) Objects.requireNonNull(getActivity())).dkLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
+                    ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
                         @Override
                         public void onSuccess(String msg, Object... obj) {
                             chatEditText.setText("");
@@ -149,6 +152,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
                         }
                     });
+                }else{
+                    Snackbar.make(view, "Enter Message", Snackbar.LENGTH_LONG).show();
                 }
                 break;
 
@@ -174,8 +179,8 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         chatListView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    /*public void setEngine(StartLiveChat dkLiveChat){
-        this.dkLiveChat = dkLiveChat;
+    /*public void setEngine(StartLiveChat mDKLiveChat){
+        this.mDKLiveChat = mDKLiveChat;
         setUpChatAdapter();
     }*/
 
