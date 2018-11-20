@@ -10,5 +10,6 @@
     <color name="accent">#00BCD4</color>
     <color name="pink">#ff1654</color>
     <color name="sixty_black">#99000000</color>
+    <color name="ninety_black">#E6000000</color>
     <color name="active_session_green">#00ff00</color>
 </resources>

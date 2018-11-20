@@ -19,6 +19,7 @@ public class ChatMsgAdapter extends RecyclerView.Adapter {
 
     private static final int VIEW_TYPE_MESSAGE_SENT = 1;
     private static final int VIEW_TYPE_MESSAGE_RECEIVED = 2;
+    private static final int DEFAULT = 0;
 
 
     public ChatMsgAdapter(Context mContext, List<MessageInfo> mMessageList) {
@@ -65,6 +66,11 @@ public class ChatMsgAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         MessageInfo message = (MessageInfo) mMessageList.get(position);
+
+        //sometimes seems to be crashing as null
+        if (message == null) {
+            return DEFAULT;
+        }
 
         if (message.getChatMsgType() == ChatMsg.MESSAGE_TYPE.SENT) {
             return VIEW_TYPE_MESSAGE_SENT;

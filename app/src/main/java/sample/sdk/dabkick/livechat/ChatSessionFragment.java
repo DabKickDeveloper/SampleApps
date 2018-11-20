@@ -135,8 +135,9 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
             case R.id.send_chat_msg:
                 //text utils checks for null object as well
                 if(!TextUtils.isEmpty(chatEditText.getText().toString().trim())) {
+                    String chatMsg = chatEditText.getText().toString().replaceAll("^\\s+|\\s+$", "");
                     MessageInfo messageInfo = new MessageInfo();
-                    messageInfo.setChatMessage(chatEditText.getText().toString());
+                    messageInfo.setChatMessage(chatMsg);
                     messageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserId());
                     messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);

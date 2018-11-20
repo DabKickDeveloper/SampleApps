@@ -41,7 +41,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     private UserPresenceCallBackListener userPresenceCallBackListener;
     ChatSessionFragment chatSessionFragment;
 
-    Animation slideAnimation;
+    Animation slideAnimation, fadeInOutAnim;
     RelativeLayout mNewMsgLayoutContainer, mChatBtnContainer;
     TextView mIncomingNewMsg;
 
@@ -136,6 +136,12 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                         mNewMsgLayoutContainer.clearAnimation();
                         slideAnimation.reset();
                         slideAnimation = null;
+                    }
+
+                    if (fadeInOutAnim != null) {
+                        mChatTogetherBtn.clearAnimation();
+                        fadeInOutAnim.reset();
+                        fadeInOutAnim = null;
                     }
 
                     mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.sixty_black));
@@ -259,6 +265,9 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
     public void onResume() {
         super.onResume();
         Log.d("chatRoom", "onResume: " + roomPos);
+        if(fadeInOutAnim != null){
+            mChatTogetherBtn.startAnimation(fadeInOutAnim);
+        }
 
     }
 
@@ -366,8 +375,11 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                 if (isDetailChatOpen)
                     return;
 
-                mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.active_session_green));
-                slideAnimation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_animation);
+                fadeInOutAnim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_in_out);
+                mChatTogetherBtn.startAnimation(fadeInOutAnim);
+
+                //mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.active_session_green));
+                slideAnimation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.fade_out);
                 mNewMsgLayoutContainer.startAnimation(slideAnimation);
 
                 slideAnimation.setAnimationListener(new Animation.AnimationListener() {

@@ -39,7 +39,7 @@
                     android:layout_marginTop="2dp"
                     android:background="@color/transparent"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/chat_bubble_icon"
+                    android:src="@drawable/chat_icon"
                     android:visibility="visible" />
 
                 <TextView
@@ -60,6 +60,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@+id/chat_btn_container"
                 android:visibility="gone"
                 android:padding="7dp">
@@ -106,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/room_name"
-            android:fontFamily="Roboto regular"
+            android:fontFamily="Roboto-Light"
             android:text="london"
             android:textAllCaps="true"
             android:textColor="@color/colorWhite"
@@ -118,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/room_location"
             android:layout_marginTop="5dp"
-            android:fontFamily="Roboto regular"
+            android:fontFamily="Roboto-Light"
             android:text="11.8.18"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
@@ -130,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/room_date"
             android:layout_marginTop="20dp"
-            android:fontFamily="Roboto regular"
+            android:fontFamily="Roboto-Light"
             android:text="room desription"
             android:textColor="@color/colorWhite"
             android:textSize="18sp" />
