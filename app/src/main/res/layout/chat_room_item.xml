@@ -70,6 +70,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:fontFamily="Roboto regular"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:textSize="18sp" />
