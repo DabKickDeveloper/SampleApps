@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dabkick.engine.Public.CallbackListener;
+import com.dabkick.engine.Public.DKLiveChat;
 import com.dabkick.engine.Public.MessageInfo;
 
 import java.util.ArrayList;
@@ -30,20 +31,23 @@ import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChatSessionFragment extends Fragment implements View.OnClickListener{
+public class ChatSessionFragment extends Fragment implements View.OnClickListener {
 
     ImageButton sendBtn;
     AppCompatImageView mBackBtn;
     View view;
     AppCompatEditText chatEditText;
+    private DKLiveChat engine;
     RecyclerView chatListView;
     ChatMsgAdapter mChatMessageAdapter;
     List<MessageInfo> mChatMessageList = new ArrayList<MessageInfo>();
     ChatBackPress chatBackPress;
     TextView mUserName, mUserRoomLocation, mUserRoomDate;
-//    String currentUserAppSpecificID;
+    //    String currentUserAppSpecificID;
     ReceivedMessageUpdate updateMessageList;
     RelativeLayout mParentLayout;
+    List<MessageInfo> previousChatMessages = new ArrayList<>();
+    List<MessageInfo> totalMessageList = new ArrayList<>();
 
     public ChatSessionFragment() {
     }
@@ -68,8 +72,16 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
     public void setUpChatAdapter() {
         if (((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener != null) {
-           // mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.getChatMessages(""));
-            mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
+            totalMessageList.clear();
+            //if (!HomepageActivity.isFirebaseMessagesTaken || (((HomepageActivity) getActivity()).mDKLiveChat.chatEventListener.getArchivedMessagesSize("") != previousChatMessages.size())) {
+            previousChatMessages.clear();
+            previousChatMessages = ((HomepageActivity) getActivity()).mDKLiveChat.chatEventListener.getChatMessages("");
+            HomepageActivity.isFirebaseMessagesTaken = true;
+            //}
+            //mChatMessageList.addAll(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.getChatMessages(""));
+            totalMessageList.addAll(previousChatMessages);
+            totalMessageList.addAll(mChatMessageList);
+            mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), totalMessageList);
             if (chatListView != null) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
@@ -84,6 +96,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
             if (chatListView != null)
                 chatListView.setAdapter(mChatMessageAdapter);
         }
+
         chatListView.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -111,6 +124,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
         initViews();
 
+
         //added to scroll the list to the last item when edit text looses focus
         chatEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -134,7 +148,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.send_chat_msg:
                 //text utils checks for null object as well
-                if(!TextUtils.isEmpty(chatEditText.getText().toString().trim())) {
+                if (!TextUtils.isEmpty(chatEditText.getText().toString().trim())) {
                     String chatMsg = chatEditText.getText().toString().replaceAll("^\\s+|\\s+$", "");
                     MessageInfo messageInfo = new MessageInfo();
                     messageInfo.setChatMessage(chatMsg);
@@ -153,7 +167,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
                         }
                     });
-                }else{
+                } else {
                     Snackbar.make(view, "Enter Message", Snackbar.LENGTH_LONG).show();
                 }
                 break;
@@ -162,12 +176,11 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
                 if (getActivity() != null) {
                     Utils.hideKeyboard(getActivity());
                     getActivity().onBackPressed();
-                    ChatRoomFragment.isDetailChatOpen =false;
-                    //mChatMessageList.clear();
+                    ChatRoomFragment.isDetailChatOpen = false;
+//                    mChatMessageList.clear();
                     chatBackPress.backButtonClick();
                 }
                 break;
-
             case R.id.parent_layout:
                 Utils.hideKeyboard(getActivity());
                 break;
@@ -180,7 +193,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         chatListView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    /*public void setEngine(StartLiveChat mDKLiveChat){
+    /*public void setEngine(DKLiveChat mDKLiveChat){
         this.mDKLiveChat = mDKLiveChat;
         setUpChatAdapter();
     }*/
@@ -196,14 +209,15 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
 
     public void updateMessageList(MessageInfo messageInfo) {
         mChatMessageList.add(messageInfo);
-        if(mChatMessageAdapter == null)
-            mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
-        mChatMessageAdapter.updateMessageList(mChatMessageList);
+        setUpChatAdapter();
+//        if (mChatMessageAdapter == null)
+//            mChatMessageAdapter = new ChatMsgAdapter(this.getActivity(), mChatMessageList);
+//        mChatMessageAdapter.updateMessageList(mChatMessageList);
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 mChatMessageAdapter.notifyDataSetChanged();
-                if(chatListView != null) {
+                if (chatListView != null) {
                     chatListView.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -242,12 +256,11 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
         return null;
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ChatRoomFragment.isDetailChatOpen =false;
+        ChatRoomFragment.isDetailChatOpen = false;
         chatBackPress.backButtonClick();
     }
-
-
 }

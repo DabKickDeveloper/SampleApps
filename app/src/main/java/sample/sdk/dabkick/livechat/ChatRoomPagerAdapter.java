@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class ChatRoomPagerAdapter extends FragmentPagerAdapter {
     public ChatRoomPagerAdapter(FragmentManager fragmentManager, AppCompatActivity context) {
         super(fragmentManager);
         this.mContext = context;
+        populateRooms();
     }
 
     @Override
@@ -28,7 +30,7 @@ public class ChatRoomPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ChatRoomFragment.newInstance(mCurrentItem);
+        return ChatRoomFragment.newInstance(position);
     }
 
     public static int getCurrentItem() {
@@ -56,5 +58,10 @@ public class ChatRoomPagerAdapter extends FragmentPagerAdapter {
                 listOfRooms.add(room);
             }
         }
+    }
+
+    public void clear(){
+        setCurrentItem(0);//reset
+        listOfRooms.clear();
     }
 }

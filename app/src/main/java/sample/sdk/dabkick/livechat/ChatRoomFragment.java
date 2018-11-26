@@ -85,7 +85,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         chatSessionFragment = new ChatSessionFragment();
         chatSessionFragment.setbackPress(this);
         chatSessionFragment.setMessageList(this);
-        ((HomepageActivity) getActivity()).mRoomPagerAdapter.populateRooms();
+//        ((HomepageActivity) getActivity()).mRoomPagerAdapter.populateRooms();
 
     }
 
@@ -181,17 +181,17 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                 }
             }
 
-            @Override
-            public void getPreviousMessages(String roomName, List<MessageInfo> messageInfo) {
-                String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName() + " entered the room";
-                MessageInfo addUserInmessageInfo = new MessageInfo();
-                addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserId());
-                addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
-                addUserInmessageInfo.setChatMessage(userEnteredMessage);
-                addUserInmessageInfo.setSystemMessage(true);
-                messageInfo.add(addUserInmessageInfo);
-                previousMessageList(messageInfo);
-            }
+//            @Override
+//            public void getPreviousMessages(String roomName, List<MessageInfo> messageInfo) {
+//                String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName() + " entered the room";
+//                MessageInfo addUserInmessageInfo = new MessageInfo();
+//                addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserId());
+//                addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
+//                addUserInmessageInfo.setChatMessage(userEnteredMessage);
+//                addUserInmessageInfo.setSystemMessage(true);
+//                messageInfo.add(addUserInmessageInfo);
+//                previousMessageList(messageInfo);
+//            }
 
         };
 
@@ -234,14 +234,18 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
             @Override
             public void getNumberOfUsersLiveNow(String roomName, int userCount) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mUserCount.setText(String.valueOf(userCount));
-                    }
-                });
 
-            }
+                mUserCount.setText(String.valueOf(userCount));
+                /*getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                        }
+                    });*/
+                }
+
+
+
 
         };
 
@@ -258,7 +262,19 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
             }
         });
 
+        addMyStatus();
+
         return view;
+    }
+
+    private void addMyStatus() {
+        String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName() + " entered the room";
+        MessageInfo addUserInmessageInfo = new MessageInfo();
+        addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserId());
+        addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
+        addUserInmessageInfo.setChatMessage(userEnteredMessage);
+        addUserInmessageInfo.setSystemMessage(true);
+        chatSessionFragment.mChatMessageList.add(addUserInmessageInfo);
     }
 
     @Override
@@ -277,8 +293,10 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
     @Override
     public void backButtonClick() {
-        Timber.d("mDKLiveChat value", ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat);
-        ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.clearAllMessages();
+        if (getActivity() != null && getActivity().getClass() == HomepageActivity.class) {
+            if (((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat != null && ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener != null)
+                ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.clearAllMessages();
+        }
     }
 
     private UserInfo createUserInfo() {
@@ -314,7 +332,9 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         Log.d("TAGGOW", "onDestroyView: ");
         ChatRoom room = ((HomepageActivity) getActivity()).mRoomPagerAdapter.listOfRooms.get(roomPos);
         chatSessionFragment.mChatMessageList.clear();
-
+        chatSessionFragment.totalMessageList.clear();
+        chatSessionFragment.previousChatMessages.clear();
+        HomepageActivity.isFirebaseMessagesTaken = false;
         ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.leaveSession(room.getRoomName(), new CallbackListener() {
             @Override
             public void onSuccess(String s, Object... objects) {
