@@ -8,7 +8,7 @@
     <string name="chat_edit_text_hint_before_invite">Invite friends to send message</string>
     <string name="chat_edit_text_hint_after_invite">Type your message here</string>
     <string name="skip">Skip</string>
-    <string name="update">Update</string>
+    <string name="update">Set</string>
     <string name="type_your_name">Type your name</string>
 
     <string-array name="roomNames">
