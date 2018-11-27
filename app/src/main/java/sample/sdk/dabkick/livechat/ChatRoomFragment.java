@@ -476,7 +476,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                 if (!name.isEmpty()) {
                     UserInfo userInfo = new UserInfo();
                     userInfo.setName(name);
-                    ((HomepageActivity) getActivity()).mDKLiveChat.updateName(userInfo, new CallbackListener() {
+                    ((HomepageActivity) getActivity()).mDKLiveChat.updateName(userInfo.getName(), new CallbackListener() {
                         @Override
                         public void onSuccess(String msg, Object... obj) {
                             alertD.dismiss();
