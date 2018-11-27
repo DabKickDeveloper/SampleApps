@@ -1,8 +1,10 @@
 package sample.sdk.dabkick.livechat;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dabkick.engine.DKServer.Retrofit.Prefs;
 import com.dabkick.engine.Public.Authentication;
 import com.dabkick.engine.Public.CallbackListener;
 import com.dabkick.engine.Public.LiveChatCallbackListener;
@@ -146,6 +151,9 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
                     mChatBtnContainer.setBackgroundColor(getResources().getColor(R.color.sixty_black));
 
+                    if (!((HomepageActivity) getActivity()).mDKLiveChat.checkIfUserNameIsSet())
+                        createNameAlertDialog();
+
                     FragmentTransaction transaction = ((HomepageActivity) getActivity()).getSupportFragmentManager().beginTransaction();
                     transaction.replace(((((HomepageActivity) getActivity()).chatSessionFragContainer.getId())), chatSessionFragment);
                     transaction.addToBackStack(null);
@@ -254,6 +262,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.subscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
+                addMyStatus();
             }
 
             @Override
@@ -261,8 +270,6 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
             }
         });
-
-        addMyStatus();
 
         return view;
     }
@@ -442,5 +449,52 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
             slideAnimation.reset();
             slideAnimation = null;
         }
+    }
+
+    private void createNameAlertDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        View promptView = layoutInflater.inflate(R.layout.user_name_layout, null);
+
+        final AlertDialog alertD = new AlertDialog.Builder(getContext()).create();
+
+        EditText userInput = promptView.findViewById(R.id.name_edit_text);
+
+        Button skip = promptView.findViewById(R.id.skip);
+
+        Button update = promptView.findViewById(R.id.update);
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                alertD.dismiss();
+                Prefs.setName(Prefs.getDabname());
+            }
+        });
+
+        update.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String name = userInput.getText().toString().trim();
+                if (!name.isEmpty()) {
+                    UserInfo userInfo = new UserInfo();
+                    userInfo.setName(name);
+                    ((HomepageActivity) getActivity()).mDKLiveChat.updateName(userInfo, new CallbackListener() {
+                        @Override
+                        public void onSuccess(String msg, Object... obj) {
+                            alertD.dismiss();
+                        }
+
+                        @Override
+                        public void onError(String msg, Object... obj) {
+                            Snackbar.make(promptView, msg, Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    Snackbar.make(promptView, "Name should not be empty", Snackbar.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        alertD.setView(promptView);
+        alertD.setCancelable(false);
+        alertD.show();
     }
 }
