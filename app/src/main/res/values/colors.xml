@@ -8,4 +8,8 @@
     <color name="black">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="accent">#00BCD4</color>
+    <color name="ninety_black">#E6000000</color>
+    <color name="sixty_black">#99000000</color>
+    <color name="active_session_green">#00ff00</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

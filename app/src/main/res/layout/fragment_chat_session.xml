@@ -1,0 +1,157 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ninety_black"
+    tools:context="ChatSessionFragment">
+
+    <LinearLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/back_btn"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_margin="4dp"
+            android:padding="4dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/back_btn_image" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:background="#B3000000"
+            android:padding="4dp">
+
+            <TextView
+                android:id="@+id/user_room_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.95"
+                android:ellipsize="marquee"
+                android:fontFamily="Roboto-Condensed"
+                android:singleLine="true"
+                android:text="Coucou chloe w akina unit"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/user_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_room_name"
+                android:layout_margin="5dp"
+                android:alpha="0.95"
+                android:ellipsize="end"
+                android:fontFamily="Roboto-Light"
+                android:maxLines="1"
+                android:text="LONDON"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/user_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_room_name"
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp"
+                android:alpha="0.95"
+                android:ellipsize="end"
+                android:fontFamily="Roboto-Light"
+                android:maxLines="1"
+                android:text="11.8.18"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/chat_box_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        android:weightSum="2">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/edit_text_box_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.8"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/chatEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:clickable="true"
+                android:hint="@string/chat_edit_text_hint_after_invite"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="bottom"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <ImageButton
+            android:id="@+id/send_chat_msg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.1"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:src="@drawable/send_chat_msg"
+            android:scaleType="fitCenter" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <LinearLayout
+        android:id="@+id/chat_list_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/chat_box_container"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="3dp"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listview_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:transcriptMode="alwaysScroll"
+            app:stackFromEnd="true" />
+    </LinearLayout>
+
+</RelativeLayout>

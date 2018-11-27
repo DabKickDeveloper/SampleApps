@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:background="@null">
+
+    <TextView
+        android:id="@+id/recieved_msg_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLength="25"
+        android:padding="5dp"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:fontFamily="Roboto-Light"
+        android:textSize="17sp"
+        android:alpha="0.95"
+        tools:text="ashwini"/>
+
+    <TextView
+        android:id="@+id/recieved_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/recieved_msg_name"
+        android:padding="5dp"
+        android:text="excfghjbnlkm"
+        android:alpha="0.95"
+        android:fontFamily="Roboto-Light"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp" />
+</RelativeLayout>
