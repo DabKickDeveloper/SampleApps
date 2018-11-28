@@ -169,12 +169,12 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.joinSession(getRoomName(ChatRoomPagerAdapter.getCurrentItem()), createUserInfo(), new CallbackListener() {
             @Override
             public void onSuccess(String msg, Object... obj) {
-                //call subscribe here
+                //handle success
             }
 
             @Override
             public void onError(String msg, Object... obj) {
-
+              //handle error
             }
         });
 
@@ -188,19 +188,6 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                     updateChatMessagList(message);
                 }
             }
-
-//            @Override
-//            public void getPreviousMessages(String roomName, List<MessageInfo> messageInfo) {
-//                String userEnteredMessage = ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName() + " entered the room";
-//                MessageInfo addUserInmessageInfo = new MessageInfo();
-//                addUserInmessageInfo.setUserId(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserId());
-//                addUserInmessageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
-//                addUserInmessageInfo.setChatMessage(userEnteredMessage);
-//                addUserInmessageInfo.setSystemMessage(true);
-//                messageInfo.add(addUserInmessageInfo);
-//                previousMessageList(messageInfo);
-//            }
-
         };
 
         userPresenceCallBackListener = new UserPresenceCallBackListener() {
@@ -219,7 +206,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                     updateChatMessagList(messageInfo);
                 }
             }
-
+//
             @Override
             public void userExited(String roomName, UserInfo participant) {
                 String userExitMessage = participant.getName() + " exited the room";
@@ -235,21 +222,16 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
                     updateChatMessagList(messageInfo);
                 }
             }
-
+//
             @Override
             public void userDataUpdated(String roomName, UserInfo participant) {
             }
-
+//
             @Override
             public void getNumberOfUsersLiveNow(String roomName, int userCount) {
 
                 mUserCount.setText(String.valueOf(userCount));
-                /*getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
 
-                        }
-                    });*/
                 }
 
 

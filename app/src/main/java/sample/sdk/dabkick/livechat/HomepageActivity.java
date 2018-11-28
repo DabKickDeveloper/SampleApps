@@ -42,25 +42,16 @@ public class HomepageActivity extends AppCompatActivity {
             auth = new Authentication("DKe1ac069ddf1011e7a1d8062", "f84bd8d546b10cff2b601093e47f61");
 
         if(Utils.isWifiConnected(this)) {
-            //Initialize Engine
+//            Initialize Engine
             mDKLiveChat = new DKLiveChat(HomepageActivity.this, auth, new CallbackListener() {
                 @Override
                 public void onSuccess(String msg, Object... obj) {
-               /* setUpChatAdapter();
-                if (isUserJoinedViaLink) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            chatEditText.setHint(R.string.chat_edit_text_hint_after_invite);
-                            mChatTogether.callOnClick();
-                        }
-                    });*/
-
+                    //handle success
                 }
 
                 @Override
                 public void onError(String msg, Object... obj) {
-                    //Snackbar.make(view, msg, Snackbar.LENGTH_LONG).show();
+                    //handle error
                 }
             });
         }else{
@@ -99,6 +90,6 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //mDKLiveChat.endLiveChat();
+//        mDKLiveChat.endLiveChat();
     }
 }
