@@ -156,7 +156,7 @@ public class ChatSessionFragment extends Fragment implements View.OnClickListene
                     messageInfo.setUserName(((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.getUserName());
 //                messageInfo.setAppSpecificUserID(currentUserAppSpecificID);
                     Utils.hideKeyboard(getActivity());
-                    ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.sendMessage("", messageInfo, new CallbackListener() {
+                    ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat.chatEventListener.sendMessage(HomepageActivity.currentRoomName, messageInfo, new CallbackListener() {
                         @Override
                         public void onSuccess(String msg, Object... obj) {
                             chatEditText.setText("");

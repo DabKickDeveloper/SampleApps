@@ -178,6 +178,8 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
             }
         });
 
+        HomepageActivity.currentRoomName = getRoomName(ChatRoomPagerAdapter.getCurrentItem());
+
         liveChatCallbackListener = new LiveChatCallbackListener() {
             @Override
             public void receivedChatMessage(String roomName, MessageInfo message) {
@@ -295,7 +297,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
         return userInfo;
     }
 
-    private String getRoomName(int position) {
+    public String getRoomName(int position) {
         String[] nameArray = getResources().getStringArray(R.array.roomNames);
         switch (position) {
             case 0:
@@ -335,7 +337,7 @@ public class ChatRoomFragment extends Fragment implements ChatSessionFragment.Ch
 
             }
         });
-
+//
         ((HomepageActivity) Objects.requireNonNull(getActivity())).mDKLiveChat
                 .unSubscribe(room.getRoomName(), liveChatCallbackListener, userPresenceCallBackListener, new CallbackListener() {
                     @Override

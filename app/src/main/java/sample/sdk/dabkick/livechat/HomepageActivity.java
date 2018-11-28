@@ -20,6 +20,7 @@ public class HomepageActivity extends AppCompatActivity {
     FrameLayout chatSessionFragContainer;
     Authentication auth;
     public static boolean isFirebaseMessagesTaken = false;
+    public static String currentRoomName;
 
 
     public void findViews() {
@@ -90,6 +91,6 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        mDKLiveChat.endLiveChat();
+        mDKLiveChat.endLiveChat();
     }
 }
