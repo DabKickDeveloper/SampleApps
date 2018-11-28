@@ -99,6 +99,6 @@ public class HomepageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //mDKLiveChat.endLiveChat();
+        mDKLiveChat.endLiveChat();
     }
 }
