@@ -2,6 +2,7 @@ package sample.sdk.dabkick.livechat;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class HomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         findViews();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         mChatRoomList = new ArrayList<ChatRoom>();
         mRoomPagerAdapter = new ChatRoomPagerAdapter(getSupportFragmentManager(), HomepageActivity.this);
