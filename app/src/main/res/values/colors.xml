@@ -7,4 +7,5 @@
     <color name="red">#FF0000</color>
     <color name="grey">#A9A9A9</color>
     <color name="black_transparent">#99000000</color>
+    <color name="dabkick_background">#f92651</color>
 </resources>

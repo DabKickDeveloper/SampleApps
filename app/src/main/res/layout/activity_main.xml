@@ -1,81 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main_background"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="sample.sdk.dabkick.sampleappdkvp.MainActivity">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/slideshow"
+    <sample.sdk.dabkick.sampleappdkvp.RainbowImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
-        android:visibility="gone">
+        android:layout_height="match_parent" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentTop="true" />
-
-        <com.viewpagerindicator.CirclePageIndicator
-            android:id="@+id/indicator"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="bottom"
-            android:padding="10dip"
-            app:centered="true"
-            app:fillColor="#df0623"
-            app:pageColor="#fff"
-            app:snap="false" />
-
-    </RelativeLayout>
-
-    <com.dabkick.dkvideoplayer.livesession.videoplayer.DkVideoView
-        android:id="@+id/video_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_videos"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"/>
 
-    <ListView
-        android:id="@+id/categories_list"
+    <FrameLayout
+        android:id="@+id/frag_container"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/video_view"
-        android:listSelector="@color/red">
-
-    </ListView>
-
-    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <!--<TextView
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:text="DKVP"
-            android:gravity="bottom|center"
-            android:background="@color/grey"
-            android:textColor="@color/black"
-            android:textSize="21dp"
-            android:textStyle="bold"
-            android:id="@+id/title"/>-->
-
-        <ListView
-            android:id="@+id/navList"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left|start"
-            android:background="#ffeeeeee"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
-
-
-    </android.support.v4.widget.DrawerLayout>
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>
