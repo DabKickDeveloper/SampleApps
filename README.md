@@ -1,5 +1,5 @@
 Download Sample App:
-https://www.dropbox.com/s/7dos0wie3lnsddu/app-debug.apk?dl=0
+https://www.dabkick.com/api/resources/videosdk/sample-app.apk
 
 Introduction
  
