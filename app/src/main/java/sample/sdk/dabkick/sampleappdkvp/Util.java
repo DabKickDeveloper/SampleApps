@@ -2,8 +2,6 @@ package sample.sdk.dabkick.sampleappdkvp;
 
 
 import android.app.Activity;
-import android.util.Log;
-import android.util.SparseArray;
 
 import com.dabkick.videosdk.publicsettings.DabKickVideoInfo;
 import com.dabkick.videosdk.publicsettings.DabKickVideoProvider;
@@ -12,10 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import at.huber.youtubeExtractor.VideoMeta;
-import at.huber.youtubeExtractor.YouTubeExtractor;
-import at.huber.youtubeExtractor.YtFile;
 
 public class Util {
 
@@ -161,44 +155,4 @@ public class Util {
 //        return new ArrayList<>(Arrays.asList(detail1, detail2, detail3, detail4, detail5, detail6, detail7, detail8, detail9, detail10, detail11, detail12));
     }
 
-    static synchronized void getStreamUrls() {
-        for (String url : urlList) {
-            String videoID1 = url.substring(url.lastIndexOf("=") + 1);
-            fullStreamUrlList.add(loadYoutubeURL(utilActivity, videoID1));
-        }
-    }
-
-    public static String loadYoutubeURL(Activity mActivity, String videoID) {
-        final String[] requiredUrl = {""};
-        String url = "https://www.youtube.com/watch?v=" + videoID + "&list=FLEYfH4kbq85W_CiOTuSjf8w&feature=mh_lolz";
-
-        new YouTubeExtractor(mActivity) {
-            @Override
-            protected void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta videoMeta) {
-                String fullStreamUrl = null;
-                boolean success = false;
-                if (ytFiles != null) {
-                    int itag = 22; //YouTube format identifier
-                    try {
-                        if (ytFiles.get(itag) == null) {
-                            fullStreamUrl = ytFiles.get(ytFiles.keyAt(0)).getUrl();
-                        } else {
-                            fullStreamUrl = ytFiles.get(itag).getUrl();
-                        }
-
-                        requiredUrl[0] = fullStreamUrl;
-                        Log.d("URL", "Url is " + requiredUrl[0]);
-
-                    } catch (Exception e) {
-
-                        fullStreamUrl = null;
-                        requiredUrl[0] = "";
-                        fullStreamUrlList.add("");
-                    }
-                }
-            }
-        }.extract(url, true, true);
-
-        return requiredUrl[0];
-    }
 }
