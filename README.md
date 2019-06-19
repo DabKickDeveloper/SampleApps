@@ -1,5 +1,6 @@
-**Download Video SDK Sample App:**
+# Sample App Download
 https://www.dabkick.com/api/resources/videosdk/sample-app.apk
+
 
 
 # Introduction
@@ -37,7 +38,7 @@ This is an innovative *Watch Together Live* capability from DabKick that Android
  
 *DabKick SDK is currently only available for Android.*
  
-This guide will instruct you how to implement the DabKick SDK into your mobile application. To download a sample app with this SDK, click [here](https://www.dropbox.com/s/7dos0wie3lnsddu/app-debug.apk?dl=0).
+This guide will instruct you how to implement the DabKick SDK into your mobile application. To download a sample app with this SDK, click [here](https://www.dabkick.com/api/resources/videosdk/sample-app.apk).
 
 
 
