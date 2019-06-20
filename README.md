@@ -361,6 +361,6 @@ public class PartnerApplication extends SdkApp {
 
 # Developer Tokens
 
-Click [here](https://www.dabkick.com/sdk/documentation/#dev-tokens) to receive your Developer Tokens.
+Click [here](https://www.dabkick.com/sdk/documentation/#dev-tokens-section) to receive your Developer Tokens.
 
 [return to top](#contents)
