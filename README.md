@@ -87,7 +87,7 @@ allprojects {
 
 ```
 dependencies {
-    compile ('com.dabkick.videosdk:videosdk:1.0.1') {
+    compile ('com.dabkick.videosdk:videosdk:3.0.1') {
         transitive = true
     }
 }
