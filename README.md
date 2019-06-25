@@ -95,7 +95,8 @@ dependencies {
 
 
 **Step 3:** In `AndroidManifest.xml`, Add the following permissions:
- ```
+```
+<uses-permission android:name=“android.permission.READ_PHONE_STATE”/>
 <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 <uses-permission android:name="android.permission.CAMERA"/>
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -200,6 +201,7 @@ button.setDabKickClickListener(new View.OnClickListener() {
     public void onClick(View v) {
         // Optionally add any videos which are to be shown to the user
         // inside DabKickVideoProvider.startDabKickWithVideos()
+        DabKick.setVideoProvider(Util.createDabKickVideoProvider(dabKickVideoInfo));
         DabKick.watchWithFriends(MainActivity.this);
     }
 });
