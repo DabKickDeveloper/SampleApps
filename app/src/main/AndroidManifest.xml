@@ -5,18 +5,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-
     <application
-        android:name=".PartnerApplication"
         android:allowBackup="true"
+        android:name=".PartnerApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-        <!-- required metadata for DabKick -->
         <meta-data
             android:name="com.dabkick.developer_id"
             android:value="@string/developer_id" />
@@ -24,37 +21,16 @@
             android:name="com.dabkick.developer_key"
             android:value="@string/developer_key" />
 
-
         <activity
             android:name=".MainActivity"
-            android:launchMode="standard"
-            android:configChanges="orientation|screenSize"
-            android:clearTaskOnLaunch="true"
-            android:allowTaskReparenting="true">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/developer_id" />
-            </intent-filter>
-
         </activity>
-        <activity android:name=".CategoryViewForVideos.VideosOfCategory" />
-        <activity
-            android:name=".PlayVideos.PlayerActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:configChanges="orientation|screenSize"
-            android:excludeFromRecents="true">
 
-
-        </activity>
     </application>
 
 </manifest>
